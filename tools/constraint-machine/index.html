@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Constraint Machine — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/ig-theme.css">
+<style>
+  .era-buttons { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .palette-row { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+  .swatch { width:28px; height:28px; border-radius:6px; border:1px solid rgba(0,0,0,.18); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Interactive Graphics</a>
+  <nav><a href="../../units/index.html">Units</a><a href="../../tools/index.html">Tools</a><a href="../../assignments/index.html">Assignments</a><a href="../../teach/index.html">Teach</a><a href="../../journey/index.html">Journey</a><a href="../../guest/index.html">Guest Voices</a><a href="../../about/index.html">About</a></nav>
+</header>
+
+<section class="tool-header">
+  <div class="stage-tag">Unit 0 — History and Constraint</div>
+  <h1>Constraint Machine</h1>
+  <p class="subtitle">Draw the same simple scene across four graphics eras. The subject stays familiar; the palette, resolution, and rules change.</p>
+  <p class="writing-note">The point is not to make the most polished image. The point is to hold the subject constant while the display system changes, so that palette, resolution, and pixel density become visible as historical forces rather than background facts.</p>
+  <div class="concept-tags">hardware limits · color depth · pixel grids · creative choices</div>
+  <div class="tool-context"><span><span class="ctx-label">unit</span><a href="../../units/00-history/index.html">Unit 0 — History and Constraint</a></span><span><span class="ctx-label">lesson</span><a href="../../units/00-history/lessons/01-some-history.html">0.1 Some History</a> · <a href="../../units/00-history/lessons/02-history-of-graphics.html">0.2 History of Graphics</a></span><span><span class="ctx-label">assignment</span><a href="../../assignments/class-logo.html">Class Logo in Lo-Res BASIC</a></span><span><span class="ctx-label">in class</span>5-minute opener or a 20-minute era comparison</span></div>
+</section>
+
+<main class="workspace">
+  <section class="panel">
+    <div id="canvas-container"></div>
+    <div class="status-strip" id="statusStrip"></div>
+    <div class="palette-row" id="paletteRow"></div>
+  </section>
+  <aside class="panel">
+    <div class="era-buttons" id="eraButtons"></div>
+    <div class="control-group">
+      <label>Scene detail <span class="value-pill" id="detailLabel">3</span></label>
+      <input type="range" id="detailSlider" min="1" max="5" value="3" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Pixel size <span class="value-pill" id="pixelLabel">14</span></label>
+      <input type="range" id="pixelSlider" min="8" max="22" value="14" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Subject</label>
+      <select id="subjectSelect" onchange="updateUI()">
+        <option value="mountain">mountain</option>
+        <option value="city">city</option>
+        <option value="fish">fish</option>
+      </select>
+    </div>
+    <div class="btn-row">
+      <button class="primary-btn" onclick="nextEra()">Next era</button>
+      <button class="secondary-btn" onclick="resetTool()">Reset</button>
+    </div>
+    <p class="mini-note">The algorithm is intentionally simple. The point is to identify what the display system permits before you worry about style.</p>
+  </aside>
+</main>
+
+<section class="prompt-row">
+  <div class="prompt-card try"><h3>Try this</h3><p>Keep the subject the same and step through each era. What details survive every constraint?</p></div>
+  <div class="prompt-card notice"><h3>Notice this</h3><p>A higher color count does not automatically make a clearer image. Resolution, palette, and composition all matter.</p></div>
+  <div class="prompt-card remix"><h3>Remix this</h3><p>Lower the detail before switching eras. Which era still reads best when the drawing becomes sparse?</p></div>
+</section>
+
+<div class="code-panel"><button class="copy-btn" onclick="copyCode()">Copy notes</button><pre id="codeOutput"></pre></div>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+<script src="../../assets/vendor/p5.min.js"></script>
+<script>
+const ERAS = [
+  {name:'Apple II HGR', cols:28, rows:18, note:'coarse high-resolution grid, tiny palette', colors:['#0f1720','#ffffff','#6fd0ff','#ff7a53']},
+  {name:'NES-ish', cols:32, rows:22, note:'small tile-like pixels, curated palette', colors:['#1a1c2c','#5d275d','#b13e53','#ef7d57','#ffcd75','#a7f070','#38b764','#257179']},
+  {name:'Early Web', cols:40, rows:26, note:'more pixels and a web-safe color palette', colors:['#003366','#336699','#99ccff','#ffcc66','#ff9966','#66cc99','#ffffff','#222222']},
+  {name:'Modern Canvas', cols:56, rows:34, note:'dense grid, color is no longer the main limit', colors:['#1f2937','#2563eb','#60a5fa','#f97316','#facc15','#22c55e','#f8fafc','#111827']}
+];
+let state = { era:0, detail:3, pixel:14, subject:'mountain' };
+let cell = 14;
+
+function setup() {
+  const c = createCanvas(620, 380);
+  c.parent('canvas-container');
+  noSmooth();
+  updateUI();
+}
+
+function draw() {
+  background(255);
+  const era = ERAS[state.era];
+  cell = Math.min(state.pixel, width / era.cols, height / era.rows);
+  const ox = (width - era.cols * cell) / 2;
+  const oy = (height - era.rows * cell) / 2;
+  noStroke();
+  fill('#f4efe7');
+  rect(ox - 8, oy - 8, era.cols * cell + 16, era.rows * cell + 16, 10);
+  drawScene(era, ox, oy);
+  stroke(44,42,38,35);
+  strokeWeight(1);
+  for (let x = 0; x <= era.cols; x++) line(ox + x*cell, oy, ox + x*cell, oy + era.rows*cell);
+  for (let y = 0; y <= era.rows; y++) line(ox, oy + y*cell, ox + era.cols*cell, oy + y*cell);
+}
+
+function px(era, ox, oy, x, y, colorIndex) {
+  if (x < 0 || y < 0 || x >= era.cols || y >= era.rows) return;
+  fill(era.colors[colorIndex % era.colors.length]);
+  noStroke();
+  rect(ox + x*cell, oy + y*cell, cell, cell);
+}
+
+function drawScene(era, ox, oy) {
+  const horizon = Math.floor(era.rows * 0.62);
+  for (let y = 0; y < era.rows; y++) {
+    for (let x = 0; x < era.cols; x++) {
+      const sky = y < horizon;
+      px(era, ox, oy, x, y, sky ? 2 : 5);
+    }
+  }
+  if (state.subject === 'mountain') drawMountain(era, ox, oy, horizon);
+  if (state.subject === 'city') drawCity(era, ox, oy, horizon);
+  if (state.subject === 'fish') drawFish(era, ox, oy, horizon);
+}
+
+function drawMountain(era, ox, oy, horizon) {
+  const peaks = [0.25, 0.52, 0.78].slice(0, state.detail);
+  for (const p of peaks) {
+    const cx = Math.floor(era.cols * p);
+    const top = Math.floor(era.rows * (0.2 + Math.abs(p-.5)*.08));
+    for (let y = top; y < horizon + 3; y++) {
+      const half = Math.floor((y - top) * 1.45);
+      for (let x = cx - half; x <= cx + half; x++) px(era, ox, oy, x, y, 0);
+    }
+  }
+  drawSun(era, ox, oy, Math.floor(era.cols*.82), Math.floor(era.rows*.2));
+}
+
+function drawCity(era, ox, oy, horizon) {
+  for (let i = 0; i < 5 + state.detail * 2; i++) {
+    const bw = Math.max(2, Math.floor(era.cols/(12 + state.detail)));
+    const x0 = (i * (bw + 2)) % era.cols;
+    const h = 3 + ((i * 3 + state.detail) % Math.floor(era.rows*.38));
+    for (let x = x0; x < x0 + bw; x++) for (let y = horizon - h; y < horizon + 5; y++) px(era, ox, oy, x, y, 0);
+    if (state.detail > 2) for (let y = horizon - h + 1; y < horizon; y += 3) px(era, ox, oy, x0 + 1, y, 4);
+  }
+  drawSun(era, ox, oy, Math.floor(era.cols*.15), Math.floor(era.rows*.18));
+}
+
+function drawFish(era, ox, oy, horizon) {
+  const count = 2 + state.detail;
+  for (let i = 0; i < count; i++) {
+    const cx = Math.floor(era.cols * (.18 + i*.14));
+    const cy = Math.floor(era.rows * (.35 + (i%3)*.1));
+    const col = 3 + i;
+    for (let x = -3; x <= 3; x++) for (let y = -1; y <= 1; y++) if (Math.abs(x)+Math.abs(y) < 4) px(era, ox, oy, cx+x, cy+y, col);
+    px(era, ox, oy, cx-4, cy, col);
+    px(era, ox, oy, cx-5, cy-1, col);
+    px(era, ox, oy, cx-5, cy+1, col);
+  }
+}
+
+function drawSun(era, ox, oy, sx, sy) {
+  const r = state.detail + 1;
+  for (let x = -r; x <= r; x++) for (let y = -r; y <= r; y++) if (x*x + y*y <= r*r) px(era, ox, oy, sx+x, sy+y, 4);
+}
+
+function updateUI() {
+  state.detail = parseInt(document.getElementById('detailSlider').value);
+  state.pixel = parseInt(document.getElementById('pixelSlider').value);
+  state.subject = document.getElementById('subjectSelect').value;
+  document.getElementById('detailLabel').textContent = state.detail;
+  document.getElementById('pixelLabel').textContent = state.pixel;
+  renderEraButtons();
+  renderInfo();
+  updateCodeView();
+}
+
+function renderEraButtons() {
+  document.getElementById('eraButtons').innerHTML = ERAS.map((era, i) =>
+    `<button class="toggle-btn ${i===state.era?'active':''}" onclick="setEra(${i})">${era.name}</button>`
+  ).join('');
+}
+function setEra(i) { state.era = i; updateUI(); }
+function nextEra() { state.era = (state.era + 1) % ERAS.length; updateUI(); }
+function resetTool() {
+  state = { era:0, detail:3, pixel:14, subject:'mountain' };
+  document.getElementById('detailSlider').value = 3;
+  document.getElementById('pixelSlider').value = 14;
+  document.getElementById('subjectSelect').value = 'mountain';
+  updateUI();
+}
+function renderInfo() {
+  const era = ERAS[state.era];
+  document.getElementById('statusStrip').innerHTML = [
+    `${era.cols} x ${era.rows} grid`,
+    `${era.colors.length} colors`,
+    era.note
+  ].map(s => `<span class="status-pill">${s}</span>`).join('');
+  document.getElementById('paletteRow').innerHTML = era.colors.map(c => `<span class="swatch" style="background:${c}"></span>`).join('');
+}
+function updateCodeView() {
+  const era = ERAS[state.era];
+  document.getElementById('codeOutput').innerHTML =
+`<span class="cm">// ${era.name}: same scene, different limits</span>
+grid = <span class="hi num">${era.cols}</span> x <span class="hi num">${era.rows}</span>
+paletteSize = <span class="hi num">${era.colors.length}</span>
+subject = "<span class="fn">${state.subject}</span>"
+detail = <span class="hi num">${state.detail}</span>
+
+<span class="cm">// Design question: what do you keep when pixels are expensive?</span>`;
+}
+function copyCode() { navigator.clipboard.writeText(document.getElementById('codeOutput').innerText); }
+</script>
+</body>
+</html>

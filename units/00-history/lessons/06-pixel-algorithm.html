@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 0.6: Pixel Algorithm — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 0 · Lesson 0.6</div>
+  <h1>Pixel Algorithm</h1>
+  <p class="writing-note">This lesson makes precision social. Students do not only write directions; they hand those directions to another person and find out whether the algorithm survives without the original author standing beside it.</p>
+  <p class="lesson-meta">Source deck: 0.6 - Pixel Algorithm.pptx · 8 slides</p>
+
+  <h2>What the class did</h2>
+  <p>Students brought printed steps for recreating their pixel drawings, exchanged directions with a partner, and tried to reproduce the design without seeing the original. They also recorded the thoughts and frustrations that came from following someone else's instructions.</p>
+  <p>The partner activity made ambiguity visible. Missing coordinates, unclear color names, inconsistent row order, or assumptions about the reader all became concrete because they changed the final image.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="kw">for</span> (<span class="kw">let</span> y = <span class="num">0</span>; y &lt; rows; y++) {
+  <span class="kw">for</span> (<span class="kw">let</span> x = <span class="num">0</span>; x &lt; cols; x++) {
+    <span class="kw">let</span> value = <span class="hi">(x + y) % palette.length</span>;
+    <span class="fn">fill</span>(palette[value]);
+    <span class="fn">square</span>(x * cell, y * cell, cell);
+  }
+}</pre></div>
+
+  <h2>Key idea</h2>
+  <p>An algorithm is not clear because the author understands it. It is clear when another executor, human or machine, can follow it and produce the intended result.</p>
+
+  <h2>Try it</h2>
+  <p>Choose one preset in the Pixel Algorithm Playground and explain it in plain English before looking at the generated code. Then compare your explanation to the loop.</p>
+  <a class="tool-cta" href="../../../tools/pixel-algorithm-playground/index.html">Open Pixel Algorithm Playground →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="05-processing-visit.html">← Previous: Processing Visit</a>
+    <a href="07-review-html-and-js.html">Next: Review HTML and JavaScript →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2.1: Making 3D Shapes — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 2 · Lesson 2.1</div>
+  <h1>Making 3D Shapes</h1>
+  <p class="writing-note">The question changes from where a point sits on the page to how an object occupies space. A cube has dimensions, orientation, and depth, and the code has to state those relationships clearly enough for the renderer to draw them.</p>
+  <p class="lesson-meta">Source deck: 2.1 - Making 3D shapes.pptx · 4 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked how code can create 3D objects and what problems have to be solved. The deck itself is spare, but the curricular turn is clear: students are moving from drawing a picture to constructing an object.</p>
+  <p>In p5.js WebGL, primitives such as <code>box</code>, <code>sphere</code>, and <code>plane</code> give students quick access to 3D forms. The work is not merely calling those functions; it is understanding that translation, rotation, and scale now describe how the object sits in a coordinate system.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="kw">function</span> <span class="fn">draw</span>() {
+  <span class="fn">background</span>(<span class="num">245</span>);
+  <span class="fn">orbitControl</span>();
+
+  <span class="fn">push</span>();
+  <span class="fn">translate</span>(-<span class="num">80</span>, <span class="num">0</span>, <span class="num">0</span>);
+  <span class="fn">box</span>(<span class="num">60</span>, <span class="num">120</span>, <span class="num">60</span>);
+  <span class="fn">pop</span>();
+}</pre></div>
+
+  <h2>Key idea</h2>
+  <p>A 3D primitive is not only a shape. It is a shape plus transformations. The object has to be placed, turned, and scaled before the scene can be read.</p>
+
+  <h2>Try it</h2>
+  <p>Use Flatten/Extrude to compare a face, its copied back face, and the side faces that connect them. That is the simplest version of making a 3D shape from a 2D one.</p>
+  <a class="tool-cta" href="../../../tools/flatten-extrude/index.html">Open Flatten/Extrude →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="20-intro-to-webgl.html">← Previous: Intro to WebGL</a>
+    <a href="22-making-new-3d-shapes.html">Next: Making New 3D Shapes →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

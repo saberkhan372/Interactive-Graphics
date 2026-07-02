@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teacher's Guide — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/ig-theme.css">
+<style>
+  .teach-page { max-width: 1080px; padding: var(--space-14) var(--gutter-wide) var(--space-20); }
+  .teach-page h1 {
+    margin: var(--space-2) 0 var(--space-7);
+    font-family: var(--font-display);
+    font-size: var(--text-title);
+    line-height: var(--leading-snug);
+  }
+  .teach-page h2 {
+    margin: var(--space-14) 0 var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-heading);
+  }
+  .teach-page h3 { margin: 0 0 var(--space-2); font-family: var(--font-display); font-size: var(--text-subheading); }
+  .teach-page p, .teach-page li { color: var(--text-body); }
+  .teach-lede { max-width: var(--measure); font-size: var(--text-lede); color: var(--text-muted); }
+  .guide-grid, .unit-note-grid, .warmup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: var(--space-7);
+    margin: var(--space-7) 0 var(--space-10);
+  }
+  .guide-card, .unit-note, .warmup-card, .pacing-card {
+    background: var(--surface-card);
+    border: var(--hairline);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: var(--space-7);
+  }
+  .guide-card .metric {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 5vw, 42px);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-2);
+  }
+  .guide-card .label, .pacing-card .label, .warmup-card .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .pacing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-7);
+    margin: var(--space-7) 0 var(--space-10);
+  }
+  .pacing-card h3 { margin-top: var(--space-2); }
+  .pacing-card .meetings { font-family: var(--font-mono); color: var(--success); font-size: var(--text-label); }
+  .compact-list { margin: var(--space-5) 0 0; padding-left: 20px; }
+  .compact-list li { margin-bottom: var(--space-2); }
+  .callout {
+    max-width: var(--measure);
+    background: var(--accent-06);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: var(--space-6) var(--space-7);
+    color: var(--text-body);
+  }
+  .source-note {
+    margin-top: var(--space-12);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    color: var(--text-faint);
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../index.html">Interactive Graphics</a>
+  <nav><a href="../units/index.html">Units</a><a href="../tools/index.html">Tools</a><a href="../assignments/index.html">Assignments</a><a href="index.html">Teach</a><a href="../journey/index.html">Journey</a><a href="../guest/index.html">Guest Voices</a><a href="../about/index.html">About</a></nav>
+</header>
+
+<main class="teach-page">
+  <div class="stage-tag">Teaching apparatus</div>
+  <h1>Teacher's Guide</h1>
+  <p class="teach-lede">This guide is for running Interactive Graphics as a real course, not just browsing it as an archive. The sequence works best when students keep a notebook, write small programs often, and treat every constraint as a design material.</p>
+  <p class="writing-note">The goal is not to cover every graphics topic. The goal is to make students feel the historical and mathematical layers under a rendered image: hardware limits, coordinate systems, pixels, transformations, projection, light, and finally tools that hide those layers again.</p>
+
+  <section class="guide-grid" aria-label="Course pacing numbers">
+    <div class="guide-card">
+      <div class="metric">19</div>
+      <div class="label">weeks</div>
+      <p>The fullest version fits a 19-week semester with room for projects, critique, and publishing.</p>
+    </div>
+    <div class="guide-card">
+      <div class="metric">38</div>
+      <div class="label">tight meetings</div>
+      <p>The 2022 fall log reached 38 classes across 14 weeks, with one cancelled class and one sub day.</p>
+    </div>
+    <div class="guide-card">
+      <div class="metric">51</div>
+      <div class="label">roomy meetings</div>
+      <p>The spring log planned 51 meetings across 19 weeks, with buffer days, spring break, intersession, and sub days built in.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Before Day One</h2>
+    <div class="callout">Set up the class so notebooks and code sit beside each other. Students should be able to sketch a timeline, write a BASIC loop, port it to p5.js, and explain what changed between the two systems.</div>
+    <ul class="check-list">
+      <li>Give every student a notebook. Warm-ups, design sketches, timelines, and research notes belong there before they become code.</li>
+      <li>Bookmark an Apple II BASIC emulator and test HGR, GR, HPLOT, HLIN, VLIN, and simple loops before assigning the first animation.</li>
+      <li>Use the local tools on this site for fast demos, then send students back to their own sketches and p5.js projects.</li>
+      <li>Keep one public portfolio destination in view from the beginning. GitHub Pages works because it turns finished work into something students can actually visit.</li>
+      <li>Decide in advance which assignments allow outside code references and which do not. The AI policy page should be part of that opening conversation.</li>
+    </ul>
+    <a class="tool-cta" href="ai-integrity.html">Open: AI and integrity guide &rarr;</a>
+  </section>
+
+  <section>
+    <h2>Pacing Guide</h2>
+    <p>The course can run as a tight semester or as a roomier half-year sequence. If time collapses, protect the historical opening, one BASIC project, one no-library 3D pipeline experience, and one final public artifact.</p>
+    <div class="pacing-grid">
+      <div class="pacing-card">
+        <div class="label">Unit 0</div>
+        <h3>History and Constraint</h3>
+        <div class="meetings">4-7 meetings</div>
+        <p>Start with personal computing history, then move quickly into pixel algorithms. Do not let the history sit as lecture only; students should make a constraint visible by the end of the unit.</p>
+      </div>
+      <div class="pacing-card">
+        <div class="label">Unit 1</div>
+        <h3>BASIC and Fractals</h3>
+        <div class="meetings">8-12 meetings</div>
+        <p>This is where time expands. BASIC syntax, emulator friction, research, animation, and presentations all need room. Keep project workdays explicit.</p>
+      </div>
+      <div class="pacing-card">
+        <div class="label">Unit 2</div>
+        <h3>2D to 3D</h3>
+        <div class="meetings">4-6 meetings</div>
+        <p>Use the BASIC-to-p5.js port as the bridge. Students should notice that the idea can survive while the language, coordinate system, and draw loop change.</p>
+      </div>
+      <div class="pacing-card">
+        <div class="label">Unit 3</div>
+        <h3>Pipeline and Wireframe</h3>
+        <div class="meetings">6-9 meetings</div>
+        <p>The important move is from object coordinates to screen coordinates. Slow down when students confuse moving the object with moving the camera.</p>
+      </div>
+      <div class="pacing-card">
+        <div class="label">Unit 4</div>
+        <h3>3D Scenes and WebGL</h3>
+        <div class="meetings">10-14 meetings</div>
+        <p>Build scenes in layers: primitives, transforms, light, material, camera, texture, custom geometry. A polished scene takes more debugging time than the slides suggest.</p>
+      </div>
+      <div class="pacing-card">
+        <div class="label">Unit 5</div>
+        <h3>Game Dev Bridge</h3>
+        <div class="meetings">4-7 meetings</div>
+        <p>GB Studio works best as a constrained bridge, not a full game-design course. Keep the focus on palettes, sprites, triggers, and how engine tools change authorship.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What Actually Slips</h2>
+    <ul class="check-list">
+      <li>Cancelled and subbed classes are normal. Keep one short, tool-based lesson ready that does not require a new assignment launch.</li>
+      <li>Notebook research takes longer than expected, especially when students are choosing a historical topic for animation.</li>
+      <li>Project presentations rarely fit into one day if students show code, explain research, and screen a finished animation.</li>
+      <li>WebGL debugging expands quickly. Leave buffer days after introducing camera, texture, and custom geometry.</li>
+      <li>School calendar interruptions matter: conferences, spring break, intersession, and senior schedules can remove continuity right when students need it most.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Warm-Up Bank</h2>
+    <p>These are notebook questions, not exit tickets. They give students a way to rehearse the idea before the code makes the idea more brittle.</p>
+    <div class="warmup-grid">
+      <div class="warmup-card"><div class="label">Opening</div><p>Why are you taking this class? What does interactive graphics mean to you?</p></div>
+      <div class="warmup-card"><div class="label">History</div><p>What developments made animation and filming possible, and how do they connect to computer graphics?</p></div>
+      <div class="warmup-card"><div class="label">Apple II</div><p>What feels different about writing code for the Apple II? What still feels familiar?</p></div>
+      <div class="warmup-card"><div class="label">Research</div><p>What topic from graphics, film, animation, or computer science are you choosing, and why?</p></div>
+      <div class="warmup-card"><div class="label">Design</div><p>Describe the first frame, a middle frame, and the final frame of your BASIC animation.</p></div>
+      <div class="warmup-card"><div class="label">Porting</div><p>How is p5.js different from BASIC? What idea from your BASIC sketch can stay the same?</p></div>
+      <div class="warmup-card"><div class="label">3D</div><p>What has to be added to a 2D shape before it can become a 3D object?</p></div>
+      <div class="warmup-card"><div class="label">Pipeline</div><p>Where does the object exist before it becomes pixels on the screen?</p></div>
+      <div class="warmup-card"><div class="label">Camera</div><p>What changes when you move the camera instead of moving the objects?</p></div>
+      <div class="warmup-card"><div class="label">Light</div><p>How does a material tell light what kind of surface it is?</p></div>
+      <div class="warmup-card"><div class="label">Texture</div><p>What information does a texture add that geometry alone cannot carry?</p></div>
+      <div class="warmup-card"><div class="label">Reflection</div><p>Which constraint made your work harder, and which constraint made it more interesting?</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Per-Unit Teaching Notes</h2>
+    <div class="unit-note-grid">
+      <div class="unit-note">
+        <h3>Unit 0</h3>
+        <p>Anchor the course in access, hardware, and visual culture. The historical arc should end with students making a pixel rule, not just naming old machines.</p>
+        <ul class="compact-list"><li>Use: <a href="../tools/pixel-algorithm-playground/index.html">Pixel Algorithm Playground</a></li><li>Watch for: history becoming trivia instead of design evidence.</li></ul>
+      </div>
+      <div class="unit-note">
+        <h3>Unit 1</h3>
+        <p>Let BASIC feel awkward. The awkwardness is part of the lesson because it exposes memory, loops, coordinates, and the screen as a real machine.</p>
+        <ul class="compact-list"><li>Use: <a href="../tools/basic-p5-twin-panels/index.html">BASIC/p5.js Twin Panels</a></li><li>Watch for: students copying code before they can narrate it.</li></ul>
+      </div>
+      <div class="unit-note">
+        <h3>Unit 2</h3>
+        <p>Make porting intellectual, not clerical. Ask students to identify which parts of the idea are language-specific and which parts are structural.</p>
+        <ul class="compact-list"><li>Use: <a href="../tools/flatten-extrude/index.html">Flatten/Extrude</a></li><li>Watch for: treating p5.js as a prettier BASIC instead of a different environment.</li></ul>
+      </div>
+      <div class="unit-note">
+        <h3>Unit 3</h3>
+        <p>The pipeline is the hinge of the course. Students should be able to point to object space, world space, camera space, and screen space in their own words.</p>
+        <ul class="compact-list"><li>Use: <a href="../tools/pipeline-step-through/index.html">Pipeline Step-Through</a></li><li>Watch for: matrix language hiding the simpler question of where a point is.</li></ul>
+      </div>
+      <div class="unit-note">
+        <h3>Unit 4</h3>
+        <p>WebGL can become a bag of features. Keep asking what each feature changes in the image and what calculation it hides.</p>
+        <ul class="compact-list"><li>Use: <a href="../tools/camera-perspective-lab/index.html">Camera &amp; Perspective Lab</a></li><li>Watch for: beautiful scenes with no explanation of camera, light, or geometry.</li></ul>
+      </div>
+      <div class="unit-note">
+        <h3>Unit 5</h3>
+        <p>GB Studio is strongest when it returns the course to constraint: tile size, palette, sprite state, scene triggers, and hardware-feeling limits.</p>
+        <ul class="compact-list"><li>Use: <a href="../tools/gameboy-sprite-editor/index.html">Game Boy Sprite Editor</a></li><li>Watch for: engine menus replacing design decisions.</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Assessment Rhythm</h2>
+    <ul class="check-list">
+      <li>Grade major work as projects with visible requirements, comments, and a short reflection, not only as code correctness.</li>
+      <li>Ask students to show process: notes, sketches, research sources, code decisions, and what changed after critique.</li>
+      <li>Keep outside help visible. Students should cite references, tutorials, peers, and approved AI help in the same spirit: name what helped and what they changed.</li>
+      <li>End with a portfolio so the course has a public shape beyond the gradebook.</li>
+    </ul>
+  </section>
+
+  <p class="source-note">Sources distilled: 2023-2024 Day-to-Day Planner, 2022-2023 Interactive Graphics by the Numbers, course descriptions, assignment briefs, and the original honor-code handout. Private roster, feedback, and student-identifying material are deliberately excluded.</p>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

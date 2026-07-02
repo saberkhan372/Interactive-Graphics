@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 1.4: Bouncing Ball — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 1 · Lesson 1.4</div>
+  <h1>Bouncing Ball</h1>
+  <p class="writing-note">The bouncing ball is the course's bridge from static drawing to animation. It is small enough to understand, but it contains the full pattern: erase, update, test, draw, and repeat.</p>
+  <p class="lesson-meta">Source deck: 1.4 - Bouncing Ball.pptx · 8 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked students to describe the main challenges in creating a bouncing-ball simulation in BASIC. The discussion named the necessary parts: position, velocity, old position, boundary checks, direction changes, and a loop that keeps the program alive.</p>
+  <p>The class then asked what was missing and what needed to be fixed. That framing matters: graphics programming is rarely a straight path from idea to image. The screen tells you what your model forgot.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="num">40</span> X = <span class="num">20</span> : Y = <span class="num">20</span>
+<span class="num">50</span> VX = <span class="fn">RND</span>(<span class="num">1</span>) * <span class="num">3</span> : VY = <span class="fn">RND</span>(<span class="num">1</span>) * <span class="num">3</span>
+<span class="num">80</span> <span class="fn">PLOT</span> PX, PY
+<span class="num">100</span> PX = X : PY = Y
+<span class="num">110</span> X = X + VX : Y = Y + VY
+<span class="num">120</span> <span class="kw">IF</span> X &gt; <span class="num">39</span> <span class="kw">OR</span> X &lt; <span class="num">0</span> <span class="kw">THEN</span> <span class="kw">GOSUB</span> <span class="num">1000</span>
+<span class="num">150</span> <span class="fn">COLOR</span> = <span class="num">3</span> : <span class="fn">PLOT</span> X,Y
+<span class="num">170</span> <span class="kw">GOTO</span> <span class="num">70</span></pre></div>
+
+  <h2>Key idea</h2>
+  <p>Motion comes from controlled forgetting. The program removes the old dot, remembers enough state to compute the next dot, checks whether the next dot is legal, and then draws again.</p>
+
+  <h2>Try it</h2>
+  <p>Use the Twin Panels tool to compare how BASIC and p5.js express the same state loop. The newer language is friendlier, but the underlying idea has not changed.</p>
+  <a class="tool-cta" href="../../../tools/basic-p5-twin-panels/index.html">Open BASIC ↔ p5.js Twin Panels →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="13-presentation.html">← Previous: First Presentation</a>
+    <a href="15-high-graphics-mode.html">Next: High Graphics Mode →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

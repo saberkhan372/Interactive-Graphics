@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 3.0: 3D Wireframes Without WebGL — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 3 · Lesson 3.0</div>
+  <h1>3D Wireframes Without WebGL</h1>
+  <p class="writing-note">This lesson asks students to build the visible skeleton of a 3D scene without letting WebGL hide the work. Edges, vertices, rotation, projection, and camera controls have to be represented directly enough that the structure of the renderer remains readable.</p>
+  <p class="lesson-meta">Source doc: 3D wireframes (without WebGL).docx</p>
+
+  <h2>What the class did</h2>
+  <p>Students expanded a basic 3D rendering example into a more complex and interactive p5.js scene. The assignment asked them to introduce at least two new shapes, plan a composition that combined those shapes with the original cube, and implement camera controls such as zooming in and out.</p>
+  <p>The source document names possible additions: torus, sphere, cone, cylinder, pyramid, advanced camera movement, lighting, materials, shape transformations, interactivity, theme, and story. The important constraint is that students still have to understand the wireframe: the model is a set of points and edges before it is a polished scene.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="kw">const</span> points = [
+  [-<span class="num">1</span>, -<span class="num">1</span>, -<span class="num">1</span>],
+  [ <span class="num">1</span>, -<span class="num">1</span>, -<span class="num">1</span>],
+  [ <span class="num">1</span>,  <span class="num">1</span>, -<span class="num">1</span>],
+  [-<span class="num">1</span>,  <span class="num">1</span>, -<span class="num">1</span>]
+];
+
+<span class="kw">const</span> edges = [[<span class="num">0</span>, <span class="num">1</span>], [<span class="num">1</span>, <span class="num">2</span>], [<span class="num">2</span>, <span class="num">3</span>], [<span class="num">3</span>, <span class="num">0</span>]];</pre></div>
+
+  <h2>Key idea</h2>
+  <p>A wireframe renderer separates structure from surface. Students can see the model because only the points and connecting edges are drawn.</p>
+
+  <h2>Try it</h2>
+  <p>Open Pipeline Step-Through and follow one vertex from model space to screen space. Then return to the wireframe assignment and ask which stage your own code is handling.</p>
+  <a class="tool-cta" href="../../../tools/pipeline-step-through/index.html">Open Pipeline Step-Through →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="../index.html">← Unit 3 index</a>
+    <a href="31-graphics-pipeline.html">Next: The Graphics Pipeline →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

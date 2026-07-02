@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 1.1: More BASICs — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 1 · Lesson 1.1</div>
+  <h1>More BASICs</h1>
+  <p class="writing-note">This lesson moves from the Apple II as hardware to BASIC as a language for sequencing visual action. Line numbers, loops, color, and horizontal lines are enough to make the machine draw with intention.</p>
+  <p class="lesson-meta">Source deck: 1.1 - More Basics.pptx · 11 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked what information would be needed to recreate a student design on an Apple II. The lesson then named BASIC as Beginners' All-purpose Symbolic Instruction Code, introduced its Dartmouth origin, and connected Applesoft BASIC to Microsoft BASIC and the Apple II.</p>
+  <p>Students studied a short Steve Wozniak Apple II demonstration program and looked up the commands it used: <code>FOR</code>, <code>COLOR</code>, and <code>HLIN</code>. The drawing becomes legible when the loop, color selection, and line command are read together.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="num">10</span> <span class="kw">FOR</span> Y=<span class="num">0</span> <span class="kw">TO</span> <span class="num">15</span>: <span class="fn">COLOR</span>=Y
+<span class="num">20</span> <span class="fn">HLIN</span> <span class="num">20</span>-Y, <span class="num">39</span> <span class="kw">AT</span> Y+Y
+<span class="num">30</span> <span class="fn">HLIN</span> <span class="num">20</span>-Y, <span class="num">39</span> <span class="kw">AT</span> Y+Y+<span class="num">1</span>
+<span class="num">40</span> <span class="kw">NEXT</span> Y</pre></div>
+
+  <h2>Key idea</h2>
+  <p>BASIC makes repetition visible. A loop does not only save work; it creates a visual structure by changing one variable and drawing again.</p>
+
+  <h2>Try it</h2>
+  <p>In the Twin Panels tool, compare the BASIC loop to the p5.js loop. The syntax changes, but the structure remains: initialize, repeat, draw, update.</p>
+  <a class="tool-cta" href="../../../tools/basic-p5-twin-panels/index.html">Open BASIC ↔ p5.js Twin Panels →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="10-basic-on-apple-ii.html">← Previous: BASIC on Apple II</a>
+    <a href="12-first-project.html">Next: First Project →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

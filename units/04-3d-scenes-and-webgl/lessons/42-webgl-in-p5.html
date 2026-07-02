@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 4.2: WebGL in p5.js — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 4 · Lesson 4.2</div>
+  <h1>WebGL in p5.js</h1>
+  <p class="writing-note">This lesson names the systems that a full 3D scene will need. Geometry is only the beginning; students will also have to understand light, material, texture, camera, models, and custom shapes.</p>
+  <p class="lesson-meta">Source deck: IG 3.2 - WebGl in p5.js.pptx · 9 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The class discussed how HTML pages can be made more presentable with CSS and JavaScript, then moved into the WebGL sequence. The deck listed the topics that would define the unit: 3D geometries, light and material, texture, camera and perspective, <code>createGraphics</code>, loading OBJ models, and custom 3D shapes.</p>
+  <p>The portfolio thread stayed present because the WebGL project was not only a sketch to run. It was a project that would eventually need to be shown, explained, and linked from the student's site.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="kw">function</span> <span class="fn">setup</span>() {
+  <span class="fn">createCanvas</span>(<span class="num">500</span>, <span class="num">500</span>, <span class="hi">WEBGL</span>);
+}
+
+<span class="kw">function</span> <span class="fn">draw</span>() {
+  <span class="fn">background</span>(<span class="num">235</span>);
+  <span class="fn">orbitControl</span>();
+  <span class="fn">box</span>(<span class="num">120</span>);
+}</pre></div>
+
+  <h2>Key idea</h2>
+  <p>A 3D scene is a composition of systems. The lesson sequence isolates those systems before the final project asks students to combine them.</p>
+
+  <h2>Try it</h2>
+  <p>Use Light & Material Lab before writing a scene. Change only one lighting or material control at a time and name the visual cause.</p>
+  <a class="tool-cta" href="../../../tools/light-material-lab/index.html">Open Light &amp; Material Lab →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="41-github-pages.html">← Previous: GitHub Pages</a>
+    <a href="44-light-and-materials.html">Next: Light and Materials →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

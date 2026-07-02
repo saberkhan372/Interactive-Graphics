@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 1.6: Remixing the Fractal Tree — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 1 · Lesson 1.6</div>
+  <h1>Remixing the Fractal Tree</h1>
+  <p class="writing-note">The fractal tree lesson makes recursion practical. Students do not only define recursion; they change the number of branches, the number of generations, the angle, the randomness, and the color until the repeated rule has a different character.</p>
+  <p class="lesson-meta">Source deck: 1.6 - Remixing the Fractal Tree.pptx · 7 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked what a fractal tree is, how code creates one, and where the main challenges live. The lesson then organized the remix around questions: how to change branches or generations, how to accept user input as angles instead of radians, how to add randomness, how to use color, and how the same ideas might support other animations.</p>
+  <p>Dan Shiffman's <em>Nature of Code</em> appears here as a resource because the lesson is no longer only about old hardware. It is about how a simple rule becomes a natural-looking structure when it is repeated with variation.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="kw">function</span> <span class="fn">branch</span>(len) {
+  <span class="fn">line</span>(<span class="num">0</span>, <span class="num">0</span>, <span class="num">0</span>, -len);
+  <span class="fn">translate</span>(<span class="num">0</span>, -len);
+  <span class="kw">if</span> (len &gt; <span class="num">4</span>) {
+    <span class="fn">rotate</span>(angle);
+    <span class="fn">branch</span>(len * <span class="num">0.67</span>);
+  }
+}</pre></div>
+
+  <h2>Key idea</h2>
+  <p>Recursion is a rule that calls itself with a smaller version of the problem. The tree looks complex because the rule repeats in space, not because the rule itself is complicated.</p>
+
+  <h2>Try it</h2>
+  <p>Use Recursion Made Visible to change one parameter at a time. The call tree will show you whether you changed the structure of the recursion or only the look of each branch.</p>
+  <a class="tool-cta" href="../../../tools/recursion-made-visible/index.html">Open Recursion Made Visible →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="15-high-graphics-mode.html">← Previous: High Graphics Mode</a>
+    <a href="../../02-2d-to-3d/index.html">Next: Unit 2 — 2D to 3D →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

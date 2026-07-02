@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assignments — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/ig-theme.css">
+<style>
+  .page-head { padding: 40px clamp(16px,5vw,64px) 10px; }
+  .page-head h1 { font-family: var(--font-display); font-size: clamp(28px,4vw,40px); margin: 0 0 8px; }
+  .assign-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 16px; padding: 10px clamp(16px,5vw,64px) 48px; max-width: 1100px; }
+  .assign-card { background: var(--surface-card); border: var(--hairline); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 20px; text-decoration: none; color: var(--ink); }
+  .assign-card .unit-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; }
+  .assign-card h3 { font-family: var(--font-display); font-size: 17px; margin: 6px 0 8px; }
+  .assign-card p { margin: 0 0 10px; font-size: 13px; color: var(--text-muted); }
+  .assign-card .due { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); }
+</style>
+</head><body>
+<header class="site-header">
+  <a class="brand" href="../index.html">Interactive Graphics</a>
+  <nav><a href="../units/index.html">Units</a><a href="../tools/index.html">Tools</a><a href="index.html">Assignments</a><a href="../teach/index.html">Teach</a><a href="../journey/index.html">Journey</a><a href="../guest/index.html">Guest Voices</a><a href="../about/index.html">About</a></nav>
+</header>
+<section class="page-head">
+  <h1>Assignments</h1>
+  <p style="max-width:60ch; color:var(--text-muted);">The real project briefs from both years of the course, merged into one canonical version each. Original due dates kept as historical record.</p>
+  <p class="writing-note">The assignments carry the same argument as the tools: constraint first, then expression. Each one names its requirements plainly, keeps a bonus list for students who want to push, and ends on the student's own site.</p>
+</section>
+<div class="assign-grid">
+  <a class="assign-card" href="personal-pixel-algorithm.html">
+    <canvas class="era-thumb card-media" data-era="appleii" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 0 · first project</div>
+    <h3>Personal Pixel Algorithm</h3>
+    <p>Design on graph paper, then write numbered instructions a human can follow to recreate it.</p>
+    <div class="due">due Sep 22 · 2022–23</div>
+  </a>
+  <a class="assign-card" href="class-logo.html">
+    <canvas class="era-thumb card-media" data-era="appleii" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 1 · warm-up</div>
+    <h3>Class Logo in Lo-Res BASIC</h3>
+    <p>Draw your initials in Apple II GR mode with HLIN and VLIN — pixels are expensive here.</p>
+    <div class="due">as assigned 2022–23</div>
+  </a>
+  <a class="assign-card" href="basic-animation.html">
+    <canvas class="era-thumb card-media" data-era="appleii" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 1 · final project</div>
+    <h3>BASIC Animation</h3>
+    <p>An animated 2D graphic in HGR mode: loops, sub-routines, user input, multiple colors.</p>
+    <div class="due">due Nov 7 · 2022–23</div>
+  </a>
+  <a class="assign-card" href="animating-history.html">
+    <canvas class="era-thumb card-media" data-era="nes" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 1</div>
+    <h3>Animating History with BASIC</h3>
+    <p>Pick a real moment from graphics history and bring it back to life in Applesoft BASIC.</p>
+    <div class="due">due Jan 30 · 2023–24</div>
+  </a>
+  <a class="assign-card" href="converting-to-p5js.html">
+    <canvas class="era-thumb card-media" data-era="web96" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 2</div>
+    <h3>Converting BASIC to p5.js</h3>
+    <p>Port your own BASIC project forward forty years, into the modern web.</p>
+    <div class="due">due Feb 13 · 2023–24</div>
+  </a>
+  <a class="assign-card" href="3d-wireframe.html">
+    <canvas class="era-thumb card-media" data-era="modern" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 3</div>
+    <h3>3D Wireframe</h3>
+    <p>Build a complex model from simple 3D parts and rotate it smoothly under user control.</p>
+    <div class="due">due Dec 5 · 2022–23</div>
+  </a>
+  <a class="assign-card" href="3d-scene.html">
+    <canvas class="era-thumb card-media" data-era="modern" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 4 · major project</div>
+    <h3>3D Scene with WebGL</h3>
+    <p>An interactive 3D scene: primitives, custom shapes, textures, lights, camera, motion.</p>
+    <div class="due">due Feb 13 · 2022–23</div>
+  </a>
+  <a class="assign-card" href="3d-simulation.html">
+    <canvas class="era-thumb card-media" data-era="modern" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 4</div>
+    <h3>3D Simulation with WebGL</h3>
+    <p>A real-time particle simulation — velocity, momentum, and collisions in 3D space.</p>
+    <div class="due">due Apr 26 · 2023–24</div>
+  </a>
+  <a class="assign-card" href="gameboy-scene.html">
+    <canvas class="era-thumb card-media" data-era="gameboy" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 5</div>
+    <h3>Scene for Game Boy</h3>
+    <p>An interactive scene in GB Studio: sprites, actors, triggers, sound, and original art.</p>
+    <div class="due">due Mar 6 · 2022–23</div>
+  </a>
+  <a class="assign-card" href="portfolio-site.html">
+    <canvas class="era-thumb card-media" data-era="web96" width="320" height="86"></canvas>
+    <div class="unit-tag">Course-wide</div>
+    <h3>Portfolio Site</h3>
+    <p>A hand-built website where every project in the course ends up living.</p>
+    <div class="due">due Jan 11 · 2022–23</div>
+  </a>
+</div>
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+<script src="../assets/era-graphics.js"></script>
+<script>
+  document.querySelectorAll('canvas.era-thumb').forEach(function (c) {
+    window.IGEraGraphics.render(c, c.dataset.era);
+  });
+</script>
+</body></html>

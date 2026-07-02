@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixel Algorithm Playground — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/ig-theme.css">
+<style>
+  .rule-input {
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    border: var(--hairline);
+    border-radius: var(--radius-sm);
+    background: var(--surface-card);
+    color: var(--text-strong);
+    padding: 10px 12px;
+  }
+  .rule-input.error { border-color: var(--highlight); box-shadow: var(--shadow-focus); }
+  .error-note { font-family: var(--font-mono); font-size: 12px; color: var(--highlight); margin: 6px 0 0; min-height: 16px; }
+  .palette-strip { display: flex; border-radius: var(--radius-xs); overflow: hidden; border: var(--hairline); width: max-content; margin-top: 8px; }
+  .palette-strip span { width: 26px; height: 22px; }
+  .var-table td:first-child { color: var(--code-fn); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Interactive Graphics</a>
+  <nav><a href="../../units/index.html">Units</a><a href="../../tools/index.html">Tools</a><a href="../../assignments/index.html">Assignments</a><a href="../../teach/index.html">Teach</a><a href="../../journey/index.html">Journey</a><a href="../../guest/index.html">Guest Voices</a><a href="../../about/index.html">About</a></nav>
+</header>
+
+<section class="tool-header">
+  <div class="stage-tag">Unit 0 — History and Constraint</div>
+  <h1>Pixel Algorithm Playground</h1>
+  <p class="subtitle">One small rule, run once for every pixel. Change the rule, and the image changes because the system has different instructions for reading the grid.</p>
+  <p class="writing-note">The lesson is not that a pattern can be made quickly. The lesson is that a visual field can be described as coordinates, rules, and a palette, and that those three decisions are enough to make structure appear.</p>
+  <div class="concept-tags">pixel grids · algorithms · nested loops · palettes</div>
+  <div class="tool-context"><span><span class="ctx-label">unit</span><a href="../../units/00-history/index.html">Unit 0 — History and Constraint</a></span><span><span class="ctx-label">lesson</span><a href="../../units/00-history/lessons/03-pixel-algorithms-and-webgl.html">0.3 Pixel Algorithms</a> · <a href="../../units/00-history/lessons/04-personal-pixel-algorithms.html">0.4 Personal Pixel Algorithms</a> · <a href="../../units/00-history/lessons/06-pixel-algorithm.html">0.6 Pixel Algorithm</a></span><span><span class="ctx-label">assignment</span><a href="../../assignments/personal-pixel-algorithm.html">Personal Pixel Algorithm</a></span><span><span class="ctx-label">in class</span>10-minute demo, then a full 30-minute lab for the personal pixel algorithm project</span></div>
+</section>
+
+<main class="workspace">
+  <section class="panel">
+    <div id="canvas-container"></div>
+    <div class="status-strip" id="statusStrip"></div>
+    <div class="palette-strip" id="paletteStrip"></div>
+  </section>
+  <aside class="panel">
+    <div class="control-group">
+      <label>Preset rules</label>
+      <div class="btn-row" id="presetRow"></div>
+    </div>
+    <div class="control-group">
+      <label>Your rule <span class="value-pill">value per cell</span></label>
+      <input type="text" class="rule-input" id="ruleInput" spellcheck="false" autocomplete="off">
+      <p class="error-note" id="errorNote"></p>
+    </div>
+    <div class="control-group">
+      <label>Palette</label>
+      <select id="paletteSelect"></select>
+    </div>
+    <div class="control-group">
+      <label>Pixel size <span class="value-pill" id="pixelLabel">16</span></label>
+      <input type="range" id="pixelSlider" min="10" max="24" value="16">
+    </div>
+    <div class="btn-row">
+      <button class="toggle-btn" id="animateBtn">Animate (t)</button>
+      <button class="secondary-btn" id="gridBtn">Grid lines</button>
+    </div>
+    <p class="mini-note">The rule runs for every cell and returns a number; the number picks a palette color. You can use:</p>
+    <table class="data-table var-table">
+      <tr><td>x, y</td><td>cell position, from top-left</td></tr>
+      <tr><td>cols, rows</td><td>grid size</td></tr>
+      <tr><td>cx, cy</td><td>the center cell</td></tr>
+      <tr><td>d</td><td>distance from center</td></tr>
+      <tr><td>t</td><td>time — turn on Animate</td></tr>
+    </table>
+  </aside>
+</main>
+
+<section class="prompt-row">
+  <div class="prompt-card try"><h3>Try this</h3><p>Start with the checkerboard. Change the 2 to a 3, then a 4. Predict the picture before you press enter.</p></div>
+  <div class="prompt-card notice"><h3>Notice this</h3><p>The rule never sees the whole picture. Every cell computes its own color from nothing but its position — and pattern still emerges.</p></div>
+  <div class="prompt-card remix"><h3>Remix this</h3><p>Keep your rule fixed and switch palettes, from 1-bit to Game Boy to the course palette. Which version of the same algorithm is easiest to read?</p></div>
+</section>
+
+<div class="code-panel"><button class="copy-btn" onclick="copyCode()">Copy code</button><pre id="codeOutput"></pre></div>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+<script src="../../assets/vendor/p5.min.js"></script>
+<script>
+const COLS = 28, ROWS = 18;
+
+const PALETTES = [
+  { name: '1-bit (Apple II hi-res feel)', colors: ['#0f1720', '#ffffff'] },
+  { name: 'Apple II artifact color', colors: ['#0f1720', '#6fd0ff', '#ff7a53', '#ffffff'] },
+  { name: 'NES-ish', colors: ['#1a1c2c', '#5d275d', '#b13e53', '#ef7d57', '#ffcd75', '#a7f070', '#38b764', '#257179'] },
+  { name: 'Game Boy DMG', colors: ['#0f380f', '#306230', '#8bac0f', '#9bbc0f'] },
+  { name: 'Course theme', colors: ['#2C2A26', '#3D5A80', '#E07A5F', '#F2CC8F', '#81B29A', '#FAF6F0'] },
+];
+
+const PRESETS = [
+  { name: 'Checkerboard', expr: '(x + y) % 2' },
+  { name: 'Stripes', expr: 'x % 3' },
+  { name: 'Rings', expr: 'floor(d / 2)' },
+  { name: 'Fade', expr: 'floor((x + y) / 4)' },
+  { name: 'Scatter', expr: 'floor(abs(sin(x * 12.9898 + y * 78.233)) * 43758.5) % 4' },
+];
+
+let cell = 16;
+let paletteIdx = 1;
+let showGrid = true;
+let animating = false;
+let exprText = PRESETS[0].expr;
+let ruleFn = null;
+let ruleError = '';
+
+// The rule gets bare math names (floor, abs, sin...) so student expressions
+// read like the lesson slides, not like JavaScript namespacing.
+const MATH_NAMES = ['floor','ceil','round','abs','sin','cos','tan','sqrt','min','max','pow','PI'];
+
+function buildRule(text) {
+  try {
+    const fn = new Function('x','y','cols','rows','cx','cy','d','t', ...MATH_NAMES,
+      '"use strict"; return (' + text + ');');
+    // probe it once so syntax AND runtime errors surface immediately
+    const probe = fn(0, 0, COLS, ROWS, COLS/2, ROWS/2, 0, 0,
+      ...MATH_NAMES.map(function (n) { return Math[n]; }));
+    if (typeof probe !== 'number' || Number.isNaN(probe)) {
+      return { fn: null, error: 'the rule must return a number' };
+    }
+    return { fn: fn, error: '' };
+  } catch (e) {
+    return { fn: null, error: e.message };
+  }
+}
+
+function setup() {
+  const c = createCanvas(COLS * 24 + 2, ROWS * 24 + 2);
+  c.parent('canvas-container');
+  noLoop();
+  applyRule(exprText);
+  renderControls();
+}
+
+function draw() {
+  background(255);
+  const t = animating ? frameCount / 12 : 0;
+  const pal = PALETTES[paletteIdx].colors;
+  const mathArgs = MATH_NAMES.map(function (n) { return Math[n]; });
+  const ox = (width - COLS * cell) / 2, oy = (height - ROWS * cell) / 2;
+  noStroke();
+  for (let y = 0; y < ROWS; y++) {
+    for (let x = 0; x < COLS; x++) {
+      let v = 0;
+      if (ruleFn) {
+        try {
+          const dx = x - COLS / 2, dy = y - ROWS / 2;
+          v = ruleFn(x, y, COLS, ROWS, COLS / 2, ROWS / 2, Math.sqrt(dx*dx + dy*dy), t, ...mathArgs);
+        } catch (e) { v = 0; }
+      }
+      fill(pal[Math.abs(Math.floor(v)) % pal.length]);
+      rect(ox + x * cell, oy + y * cell, cell, cell);
+    }
+  }
+  if (showGrid) {
+    stroke(44, 42, 38, 40);
+    for (let x = 0; x <= COLS; x++) line(ox + x * cell, oy, ox + x * cell, oy + ROWS * cell);
+    for (let y = 0; y <= ROWS; y++) line(ox, oy + y * cell, ox + COLS * cell, oy + y * cell);
+    noStroke();
+  }
+}
+
+function applyRule(text) {
+  exprText = text;
+  const built = buildRule(text);
+  ruleError = built.error;
+  if (built.fn) ruleFn = built.fn;
+  const input = document.getElementById('ruleInput');
+  input.value = text;
+  input.classList.toggle('error', !!ruleError);
+  document.getElementById('errorNote').textContent = ruleError ? '! ' + ruleError : '';
+  renderReadouts();
+  renderCode();
+  redraw();
+}
+
+function renderControls() {
+  document.getElementById('presetRow').innerHTML = PRESETS.map(function (p, i) {
+    return '<button class="toggle-btn' + (p.expr === exprText ? ' active' : '') + '" onclick="usePreset(' + i + ')">' + p.name + '</button>';
+  }).join('');
+  document.getElementById('paletteSelect').innerHTML = PALETTES.map(function (p, i) {
+    return '<option value="' + i + '"' + (i === paletteIdx ? ' selected' : '') + '>' + p.name + ' · ' + p.colors.length + ' colors</option>';
+  }).join('');
+}
+
+function renderReadouts() {
+  const pal = PALETTES[paletteIdx].colors;
+  document.getElementById('statusStrip').innerHTML =
+    '<span class="status-pill">' + COLS + ' x ' + ROWS + ' grid</span>' +
+    '<span class="status-pill">' + pal.length + ' colors</span>' +
+    '<span class="status-pill">' + (COLS * ROWS) + ' cells, one rule</span>';
+  document.getElementById('paletteStrip').innerHTML = pal.map(function (c) {
+    return '<span style="background:' + c + '"></span>';
+  }).join('');
+}
+
+function renderCode() {
+  const pal = PALETTES[paletteIdx].colors;
+  document.getElementById('codeOutput').innerHTML =
+    '<span class="cm">// one rule, run for every cell</span>\n' +
+    '<span class="kw">for</span> (<span class="kw">let</span> y = <span class="num">0</span>; y &lt; <span class="num">' + ROWS + '</span>; y++) {\n' +
+    '  <span class="kw">for</span> (<span class="kw">let</span> x = <span class="num">0</span>; x &lt; <span class="num">' + COLS + '</span>; x++) {\n' +
+    '    <span class="kw">let</span> value = <span class="hi">' + exprText.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</span>;\n' +
+    '    <span class="fn">fill</span>(palette[value % <span class="num">' + pal.length + '</span>]);\n' +
+    '    <span class="fn">square</span>(x * <span class="num">' + cell + '</span>, y * <span class="num">' + cell + '</span>, <span class="num">' + cell + '</span>);\n' +
+    '  }\n' +
+    '}';
+}
+
+function usePreset(i) {
+  applyRule(PRESETS[i].expr);
+  renderControls();
+}
+
+function copyCode() { navigator.clipboard.writeText(document.getElementById('codeOutput').innerText); }
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('ruleInput').addEventListener('input', function (e) {
+    applyRule(e.target.value);
+    renderControls();
+  });
+  document.getElementById('paletteSelect').addEventListener('change', function (e) {
+    paletteIdx = +e.target.value;
+    renderReadouts(); renderCode(); redraw();
+  });
+  document.getElementById('pixelSlider').addEventListener('input', function (e) {
+    cell = +e.target.value;
+    document.getElementById('pixelLabel').textContent = cell;
+    renderCode(); redraw();
+  });
+  document.getElementById('animateBtn').addEventListener('click', function (e) {
+    animating = !animating;
+    e.target.classList.toggle('active', animating);
+    if (animating) loop(); else { noLoop(); redraw(); }
+  });
+  document.getElementById('gridBtn').addEventListener('click', function () {
+    showGrid = !showGrid;
+    redraw();
+  });
+});
+</script>
+</body>
+</html>

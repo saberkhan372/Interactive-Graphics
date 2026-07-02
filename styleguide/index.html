@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Style Guide — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/ig-theme.css">
+<style>
+  /* This page renders the design system out of the same ig-theme.css the
+     rest of the site uses — nothing here is a mockup. If a specimen below
+     looks wrong, the site is wrong. */
+  .page-head { padding: 40px var(--gutter-wide) 10px; }
+  .page-head h1 { font-family: var(--font-display); font-size: var(--text-display); margin: 0 0 8px; }
+  .guide { padding: 10px var(--gutter-wide) 48px; max-width: 980px; }
+  .guide section { margin-bottom: 40px; }
+  .guide h2 {
+    font-family: var(--font-display); font-size: var(--text-heading);
+    border-bottom: var(--hairline); padding-bottom: 8px; margin: 0 0 4px;
+  }
+  .guide .section-note { color: var(--text-muted); max-width: var(--measure); margin: 6px 0 18px; font-size: var(--text-sm); }
+
+  /* color specimens */
+  .swatch-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .swatch { width: 132px; }
+  .swatch .chip { height: 56px; border-radius: var(--radius-xs); border: var(--hairline); }
+  .swatch .name { font-family: var(--font-mono); font-size: var(--text-label); margin-top: 6px; }
+  .swatch .val { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--text-faint); }
+  .tint-strip { display: flex; border-radius: var(--radius-xs); overflow: hidden; border: var(--hairline); width: max-content; }
+  .tint-strip span { width: 72px; height: 40px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 10px; color: white; }
+
+  /* era palettes */
+  .era-block { margin-bottom: 14px; }
+  .era-block .label { font-family: var(--font-mono); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--text-faint); margin-bottom: 5px; }
+  .era-swatches { display: flex; border-radius: var(--radius-xs); overflow: hidden; border: var(--hairline); width: max-content; }
+  .era-swatches span { width: 30px; height: 26px; }
+  .era-canvas-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+  .era-canvas-row figure { margin: 0; flex: 1 1 180px; min-width: 0; }
+  .era-canvas-row canvas { display: block; width: 100%; height: 110px; border-radius: var(--radius-xs); }
+  .era-canvas-row figcaption { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--text-faint); margin-top: 5px; }
+
+  /* type specimens */
+  .type-specimen { border-bottom: var(--hairline); padding: 12px 0; display: flex; align-items: baseline; gap: 18px; }
+  .type-specimen:last-child { border-bottom: none; }
+  .type-specimen .meta { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--text-faint); width: 190px; flex-shrink: 0; }
+
+  /* spacing + radii */
+  .space-bar { background: var(--accent-12); border-left: 2px solid var(--accent); height: 20px; margin-bottom: 6px; display: flex; align-items: center; }
+  .space-bar .tag { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--text-faint); padding-left: 8px; white-space: nowrap; }
+  .radii-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .radius-demo { width: 110px; height: 72px; background: var(--surface-card); border: var(--hairline); box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: var(--text-micro); color: var(--text-faint); }
+
+  /* component specimens */
+  .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .spec { background: var(--surface-card); border: var(--hairline); border-radius: var(--radius); box-shadow: var(--shadow); padding: var(--pad-card); }
+  .spec h3 { margin: 0 0 12px; font-family: var(--font-mono); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--text-faint); }
+  .guide .prompt-row { padding: 0; margin-top: 4px; }
+  .guide .code-panel { margin: 4px 0 0; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../index.html">Interactive Graphics</a>
+  <nav>
+    <a href="../units/index.html">Units</a>
+    <a href="../tools/index.html">Tools</a><a href="../assignments/index.html">Assignments</a>
+    <a href="../teach/index.html">Teach</a><a href="../journey/index.html">Journey</a><a href="../guest/index.html">Guest Voices</a>
+    <a href="../about/index.html">About</a>
+  </nav>
+</header>
+
+<section class="page-head">
+  <div class="stage-tag">Design System</div>
+  <h1>Style Guide</h1>
+  <p style="max-width:60ch; color:var(--text-muted);">Warm paper, quiet ink, one loud accent at a time. Every specimen on this page is rendered live from the same stylesheet the rest of the site uses.</p>
+</section>
+
+<div class="guide">
+
+  <section>
+    <h2>Color</h2>
+    <p class="section-note">Six base colors carry the whole site. Washes are the base colors at low alpha; text is ink at stepped opacities, never a different gray.</p>
+    <div class="swatch-row">
+      <div class="swatch"><div class="chip" style="background:var(--cream)"></div><div class="name">--cream</div><div class="val">#FAF6F0 · paper</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--ink)"></div><div class="name">--ink</div><div class="val">#2C2A26 · text + code surface</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--accent)"></div><div class="name">--accent</div><div class="val">#3D5A80 · primary action</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--highlight)"></div><div class="name">--highlight</div><div class="val">#E07A5F · attention / notice</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--highlight-light)"></div><div class="name">--highlight-light</div><div class="val">#F2CC8F · warm gold</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--success)"></div><div class="name">--success</div><div class="val">#81B29A · positive / remix</div></div>
+    </div>
+    <p class="section-note" style="margin-top:20px;">Ink tints — text opacity steps on cream:</p>
+    <div class="tint-strip">
+      <span style="background:var(--ink-90)">90</span>
+      <span style="background:var(--ink-82)">82</span>
+      <span style="background:var(--ink-72)">72</span>
+      <span style="background:var(--ink-58)">58</span>
+      <span style="background:var(--ink-40)">40</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Era palettes</h2>
+    <p class="section-note">The tools draw with authentic hardware palettes — and each era's thumbnail is rendered with that era's real technique, not one algorithm recolored.</p>
+    <div class="era-block">
+      <div class="label">Apple II HGR · NTSC artifact color</div>
+      <div class="era-swatches"><span style="background:#0f1720"></span><span style="background:#ffffff"></span><span style="background:#6fd0ff"></span><span style="background:#ff7a53"></span></div>
+    </div>
+    <div class="era-block">
+      <div class="label">NES-ish · curated palette</div>
+      <div class="era-swatches"><span style="background:#1a1c2c"></span><span style="background:#5d275d"></span><span style="background:#b13e53"></span><span style="background:#ef7d57"></span><span style="background:#ffcd75"></span><span style="background:#a7f070"></span><span style="background:#38b764"></span><span style="background:#257179"></span></div>
+    </div>
+    <div class="era-block">
+      <div class="label">Game Boy DMG · 4 greens</div>
+      <div class="era-swatches"><span style="background:#0f380f"></span><span style="background:#306230"></span><span style="background:#8bac0f"></span><span style="background:#9bbc0f"></span></div>
+    </div>
+    <div class="era-canvas-row">
+      <figure><canvas class="era-thumb" data-era="appleii" width="320" height="110"></canvas><figcaption>Apple II HGR — artifact color + scanlines</figcaption></figure>
+      <figure><canvas class="era-thumb" data-era="nes" width="320" height="110"></canvas><figcaption>NES — tile grid + dithered ground</figcaption></figure>
+      <figure><canvas class="era-thumb" data-era="gameboy" width="320" height="110"></canvas><figcaption>Game Boy DMG — fixed 4-shade palette</figcaption></figure>
+      <figure><canvas class="era-thumb" data-era="web96" width="320" height="110"></canvas><figcaption>Early Web — ordered GIF dither + bevel</figcaption></figure>
+      <figure><canvas class="era-thumb" data-era="modern" width="320" height="110"></canvas><figcaption>Modern Canvas — gradients + soft glow</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Type</h2>
+    <p class="section-note">Three families, each with a job. The mono/serif contrast is the brand: humane ideas, machine precision.</p>
+    <div class="type-specimen">
+      <div class="meta">Fraunces · display<br>var(--text-display)</div>
+      <div style="font-family:var(--font-display); font-weight:var(--weight-display); font-size:var(--text-display); line-height:var(--leading-tight);">From Apple II to WebGL</div>
+    </div>
+    <div class="type-specimen">
+      <div class="meta">DM Sans · body<br>15px / 1.5</div>
+      <div style="max-width:52ch;">The limits of a machine shape the art, code, and culture made with it. Each unit asks students to study the system, then test the claim with their own hands.</div>
+    </div>
+    <div class="type-specimen">
+      <div class="meta">DM Mono · labels<br>12px · tracked · uppercase</div>
+      <div style="font-family:var(--font-mono); font-size:var(--text-label); text-transform:uppercase; letter-spacing:var(--tracking-label); color:var(--accent);">Unit 3 — Pipeline and Wireframe · model space · projection</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Spacing, radii, elevation</h2>
+    <p class="section-note">A loose 4px base; generous whitespace is the point. One soft, low shadow — this is paper, not glass.</p>
+    <div style="max-width:340px; margin-bottom:22px;">
+      <div class="space-bar" style="width:16px"><span class="tag">--space-7 · 16px</span></div>
+      <div class="space-bar" style="width:24px"><span class="tag">--space-10 · 24px</span></div>
+      <div class="space-bar" style="width:32px"><span class="tag">--space-14 · 32px</span></div>
+      <div class="space-bar" style="width:48px"><span class="tag">--space-20 · 48px</span></div>
+    </div>
+    <div class="radii-row">
+      <div class="radius-demo" style="border-radius:var(--radius)">10px · cards</div>
+      <div class="radius-demo" style="border-radius:var(--radius-sm)">8px · controls</div>
+      <div class="radius-demo" style="border-radius:var(--radius-xs)">6px · chips</div>
+      <div class="radius-demo" style="border-radius:var(--radius-pill)">pill · tags</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Components</h2>
+    <p class="section-note">The shared classes every page and tool builds from.</p>
+    <div class="spec-grid">
+      <div class="spec">
+        <h3>Tags and pills</h3>
+        <div class="stage-tag">Unit 0 — History and Constraint</div>
+        <div class="status-strip"><span class="status-pill">16 x 16 grid</span><span class="status-pill">4 colors</span><span class="value-pill">28°</span></div>
+      </div>
+      <div class="spec">
+        <h3>Buttons</h3>
+        <div class="btn-row">
+          <button class="primary-btn">Close shape</button>
+          <button class="secondary-btn">Reset</button>
+          <button class="toggle-btn active">Apple II HGR</button>
+          <button class="toggle-btn">NES-ish</button>
+        </div>
+      </div>
+      <div class="spec">
+        <h3>Controls</h3>
+        <div class="control-group">
+          <label>View rotation <span class="value-pill">28°</span></label>
+          <input type="range" min="0" max="360" value="28">
+        </div>
+        <div class="control-group" style="margin-bottom:0;">
+          <label>Subject</label>
+          <select><option>mountain</option><option>city</option><option>fish</option></select>
+        </div>
+      </div>
+      <div class="spec">
+        <h3>Data table</h3>
+        <table class="data-table">
+          <tr><th>vertex</th><th>x</th><th>y</th><th>z</th></tr>
+          <tr><td>0</td><td>-50</td><td>-50</td><td>50</td></tr>
+          <tr><td>1</td><td>50</td><td>-50</td><td>50</td></tr>
+        </table>
+        <p class="mini-note">Readouts update live as controls move.</p>
+      </div>
+    </div>
+
+    <p class="section-note" style="margin-top:22px;">The teaching triad — fixed order, one color each. This is the voice of every tool:</p>
+    <section class="prompt-row">
+      <div class="prompt-card try"><h3>Try this</h3><p>Set the reveal slider to 1, then increase it one level at a time.</p></div>
+      <div class="prompt-card notice"><h3>Notice this</h3><p>The rule never gets more complicated. The complexity comes from repeating it.</p></div>
+      <div class="prompt-card remix"><h3>Remix this</h3><p>Use a small angle and a large shrink. How does the tree's personality change?</p></div>
+    </section>
+
+    <p class="section-note" style="margin-top:22px;">The dark code panel — the one dark surface, anchoring the bottom of every tool:</p>
+    <div class="code-panel"><button class="copy-btn">Copy code</button><pre style="margin:0;"><span class="cm">// same scene, different limits</span>
+<span class="kw">let</span> grid = <span class="hi num">40</span> x <span class="hi num">26</span>;
+<span class="kw">function</span> <span class="fn">drawScene</span>(detail) {
+  paletteSize = <span class="num">4</span>; <span class="cm">// what do you keep when pixels are expensive?</span>
+}</pre></div>
+  </section>
+
+  <section>
+    <h2>Voice</h2>
+    <p class="section-note">Serious, humane, and concrete. Instructional copy says <em>you</em>; the origin story says <em>I</em>. Sentence case everywhere; uppercase lives only in tracked-out mono labels. Concepts anchor to an era or a machine, and the numbers are real: 1-bit, 4 colors, 16 × 16. No emoji. Unicode does the pointing: → · ×</p>
+  </section>
+
+</div>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+<script src="../assets/era-graphics.js"></script>
+<script>
+  document.querySelectorAll('canvas.era-thumb').forEach(function (c) {
+    window.IGEraGraphics.render(c, c.dataset.era);
+  });
+</script>
+</body>
+</html>

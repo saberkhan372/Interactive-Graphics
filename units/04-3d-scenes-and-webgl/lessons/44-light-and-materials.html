@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 4.4: Light and Materials — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 4 · Lesson 4.4</div>
+  <h1>Light and Materials</h1>
+  <p class="writing-note">Light and material appear together on the surface, which makes them easy to confuse. This lesson separates the source of light from the surface response so students can see which command causes which change.</p>
+  <p class="lesson-meta">Source deck: IG 3.4 - Light &amp; Materials.pptx · 5 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked what p5.js WebGL can do, which commands and shapes students already have, and what can be adjusted. The lesson then introduced the functions that control surface and illumination: <code>ambientMaterial</code>, <code>normalMaterial</code>, <code>fill</code>, <code>ambientLight</code>, <code>directionalLight</code>, and <code>pointLight</code>.</p>
+  <p>The conceptual work was to stop treating a lit object as a single visual effect. The shape, its material, and the light acting on it are different parts of the scene.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="fn">ambientLight</span>(<span class="num">60</span>);
+<span class="fn">directionalLight</span>(<span class="num">255</span>, <span class="num">255</span>, <span class="num">255</span>, -<span class="num">1</span>, <span class="num">0</span>, -<span class="num">1</span>);
+<span class="fn">ambientMaterial</span>(<span class="num">220</span>, <span class="num">120</span>, <span class="num">80</span>);
+<span class="fn">sphere</span>(<span class="num">90</span>);</pre></div>
+
+  <h2>Key idea</h2>
+  <p>Lighting describes how the scene is illuminated. Material describes how the object responds. A good 3D scene needs both.</p>
+
+  <h2>Try it</h2>
+  <p>Open Light & Material Lab and compare ambient, directional, and point light on the same object without changing the material.</p>
+  <a class="tool-cta" href="../../../tools/light-material-lab/index.html">Open Light &amp; Material Lab →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="42-webgl-in-p5.html">← Previous: WebGL in p5.js</a>
+    <a href="46-textures.html">Next: Textures →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Course Journey — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/ig-theme.css">
+<style>
+  .page-head { padding: 40px var(--gutter-wide) 10px; }
+  .page-head h1 { font-family: var(--font-display); font-size: var(--text-display); margin: 0 0 8px; }
+  .journey { padding: 10px var(--gutter-wide) 48px; max-width: 780px; }
+  .year-head {
+    font-family: var(--font-display); font-size: var(--text-heading);
+    margin: 36px 0 4px;
+  }
+  .year-sub { font-family: var(--font-mono); font-size: var(--text-label); color: var(--text-faint); margin: 0 0 18px; }
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 26px; border-left: 2px solid var(--accent-12); }
+  .timeline li { position: relative; padding: 0 0 22px 18px; }
+  .timeline li::before {
+    content: ''; position: absolute; left: -33px; top: 5px;
+    width: 12px; height: 12px; border-radius: 999px;
+    background: var(--accent); border: 2px solid var(--cream);
+  }
+  .timeline li.milestone::before { background: var(--highlight); }
+  .timeline li.guest::before { background: var(--success); }
+  .timeline .when { font-family: var(--font-mono); font-size: var(--text-label); color: var(--accent); text-transform: uppercase; letter-spacing: var(--tracking-label); }
+  .timeline h3 { font-family: var(--font-display); font-size: 17px; margin: 3px 0 4px; }
+  .timeline p { margin: 0; font-size: var(--text-sm); color: var(--text-muted); max-width: 58ch; }
+  .timeline a { color: var(--accent); }
+  .numbers-card {
+    background: var(--surface-card); border: var(--hairline); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 16px 20px; margin: 6px 0 0;
+    font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin: 14px 0 0; font-family: var(--font-mono); font-size: var(--text-micro); color: var(--text-faint); }
+  .legend span::before { content: '●  '; }
+  .legend .l-class::before { color: var(--accent); }
+  .legend .l-due::before { color: var(--highlight); }
+  .legend .l-guest::before { color: var(--success); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../index.html">Interactive Graphics</a>
+  <nav><a href="../units/index.html">Units</a><a href="../tools/index.html">Tools</a><a href="../assignments/index.html">Assignments</a><a href="../teach/index.html">Teach</a><a href="index.html">Journey</a><a href="../guest/index.html">Guest Voices</a><a href="../about/index.html">About</a></nav>
+</header>
+
+<section class="page-head">
+  <div class="stage-tag">By the numbers</div>
+  <h1>The Course Journey</h1>
+  <p style="max-width:60ch; color:var(--text-muted);">Two years of Interactive Graphics as they actually ran — real dates, real due days, real interruptions — drawn from the class logs and planners.</p>
+  <div class="legend">
+    <span class="l-class">course moment</span>
+    <span class="l-due">project due</span>
+    <span class="l-guest">guest &amp; community</span>
+  </div>
+</section>
+
+<div class="journey">
+  <h2 class="year-head">2022–2023 · The full arc</h2>
+  <p class="year-sub">Semester 1: 38 classes in 14 weeks (one cancelled, one subbed) · Semester 2: 51 planned meetings in 19 weeks</p>
+  <ul class="timeline">
+    <li>
+      <div class="when">September 8, 2022</div>
+      <h3>The welcome letter</h3>
+      <p>The course opens with autobiography: Bangladesh, an architect father rendering AutoCAD on an i386, an NES from an aunt, Bryce3D on a hand-me-down PC. Students write response letters about their own paths to computing.</p>
+    </li>
+    <li>
+      <div class="when">September 22</div>
+      <h3>Pixel algorithms on paper</h3>
+      <p>Before any code: a design on graph paper, then a numbered, human-followable algorithm for recreating it. The whole course in miniature. <a href="../tools/pixel-algorithm-playground/index.html">Tool →</a></p>
+    </li>
+    <li class="guest">
+      <div class="when">Fall 2022</div>
+      <h3>Processing Foundation visit</h3>
+      <p>Research into Dorothy Santos, Xiaowei Wang, and the Processing community — then first p5.js code in the web editor. <a href="../units/00-history/lessons/05-processing-visit.html">Lesson →</a></p>
+    </li>
+    <li class="milestone">
+      <div class="when">October 13</div>
+      <h3>Class Logo due</h3>
+      <p>An original logo in Applesoft BASIC lo-res graphics, presented in class with a case for why it should be the class sticker. <a href="../assignments/class-logo.html">Assignment →</a></p>
+    </li>
+    <li class="milestone">
+      <div class="when">November 7</div>
+      <h3>BASIC Animation due</h3>
+      <p>The Unit 1 final: an animated 2D graphic in HGR mode with loops, sub-routines, and user input. <a href="../assignments/basic-animation.html">Assignment →</a></p>
+    </li>
+    <li class="milestone">
+      <div class="when">December 5</div>
+      <h3>3D Wireframe due</h3>
+      <p>A complex model from simple 3D parts, rotating smoothly under user control — no WebGL, just the math. <a href="../assignments/3d-wireframe.html">Assignment →</a></p>
+    </li>
+    <li>
+      <div class="when">January 2023</div>
+      <h3>Semester 1, by the numbers</h3>
+      <div class="numbers-card">38 classes · 14 weeks · 3 units · 3 projects · one cancelled class · one sub day</div>
+    </li>
+    <li class="milestone">
+      <div class="when">January 11</div>
+      <h3>Portfolio Site due</h3>
+      <p>Every project gets a public home: hand-built HTML and CSS on GitHub Pages. <a href="../assignments/portfolio-site.html">Assignment →</a></p>
+    </li>
+    <li class="guest">
+      <div class="when">January 28</div>
+      <h3>CC Fest NYC at Dalton</h3>
+      <p>The free creative-coding festival comes to the school — keynotes from Christy Crawford (DOE CSforAll) and Dan Shiffman (NYU, Coding Train), workshops from educators across the city.</p>
+    </li>
+    <li class="milestone">
+      <div class="when">February 13</div>
+      <h3>3D Scene with WebGL due</h3>
+      <p>The big integrative build: primitives, custom shapes, textures, lights, camera, motion, interactivity. <a href="../assignments/3d-scene.html">Assignment →</a></p>
+    </li>
+    <li class="guest">
+      <div class="when">March 2</div>
+      <h3>GB Studio Central visits</h3>
+      <p>A virtual troubleshooting session with Emi from GB Studio Central, mid-project.</p>
+    </li>
+    <li class="milestone">
+      <div class="when">March 6</div>
+      <h3>Scene for Game Boy due</h3>
+      <p>An interactive GB Studio scene with original art, sound, and scripted elements — then Show &amp; Tell. <a href="../assignments/gameboy-scene.html">Assignment →</a></p>
+    </li>
+  </ul>
+
+  <h2 class="year-head">2023–2024 · The refinement</h2>
+  <p class="year-sub">Planned as 40 classes in 19 weeks (30 with seniors) · 5 units · granular day-to-day planning</p>
+  <ul class="timeline">
+    <li>
+      <div class="when">Fall 2023</div>
+      <h3>The course gets rebuilt</h3>
+      <p>Units renumbered and resequenced, with a class-by-class planner: warm-up questions, homework, and lesson notes for every meeting.</p>
+    </li>
+    <li class="milestone">
+      <div class="when">January 17–30</div>
+      <h3>Animating History with BASIC</h3>
+      <p>Research a real moment from graphics history, then bring it back to life on an Apple II emulator — research, outline, code, documentation, submission, on a published schedule. <a href="../assignments/animating-history.html">Assignment →</a></p>
+    </li>
+    <li>
+      <div class="when">February 2 · Class 11</div>
+      <h3>The ChatGPT moment</h3>
+      <p>A generated comparison of Applesoft BASIC and p5.js appears in the lesson prep — kept in the course's public history as an object of critique, not an authority. <a href="../teach/ai-integrity.html">How the course handles AI →</a></p>
+    </li>
+    <li class="milestone">
+      <div class="when">February 13</div>
+      <h3>Converting BASIC to p5.js due</h3>
+      <p>Students port their own BASIC project forward forty years. Same idea, new system. <a href="../assignments/converting-to-p5js.html">Assignment →</a></p>
+    </li>
+    <li>
+      <div class="when">Spring 2024</div>
+      <h3>The pipeline unit lands</h3>
+      <p>The year's strongest addition: building a 3D wireframe renderer without WebGL, so the graphics pipeline is math students did themselves. <a href="../units/03-pipeline-and-wireframe/index.html">Unit 3 →</a></p>
+    </li>
+    <li class="milestone">
+      <div class="when">April 26</div>
+      <h3>3D Simulation with WebGL due</h3>
+      <p>Real-time particles with velocity, momentum, and collisions — behavior, not just composition. <a href="../assignments/3d-simulation.html">Assignment →</a></p>
+    </li>
+  </ul>
+
+  <h2 class="year-head">2026 · The archive becomes a course again</h2>
+  <ul class="timeline">
+    <li>
+      <div class="when">July 2026</div>
+      <h3>This site</h3>
+      <p>Both years reconstructed as one public sequence: 34 lessons, 9 assignments, 10 interactive tools, and a teacher's guide — so the course can be browsed, taught, or remixed by anyone.</p>
+    </li>
+  </ul>
+</div>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

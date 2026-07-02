@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Light & Material Lab — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Interactive Graphics</a>
+  <nav><a href="../../units/index.html">Units</a><a href="../../tools/index.html">Tools</a><a href="../../assignments/index.html">Assignments</a><a href="../../teach/index.html">Teach</a><a href="../../journey/index.html">Journey</a><a href="../../guest/index.html">Guest Voices</a><a href="../../about/index.html">About</a></nav>
+</header>
+
+<section class="tool-header">
+  <div class="stage-tag">Unit 4 — 3D Scenes and WebGL</div>
+  <h1>Light & Material Lab</h1>
+  <p class="subtitle">Change one lighting or material choice at a time and watch the same object tell you what that command controls.</p>
+  <p class="writing-note">Lighting and material are easy to confuse because they appear together on the surface of an object. This tool separates them so each command can be read as a distinct visual cause.</p>
+  <div class="concept-tags">ambientLight · directionalLight · pointLight · material · shading</div>
+  <div class="tool-context"><span><span class="ctx-label">unit</span><a href="../../units/04-3d-scenes-and-webgl/index.html">Unit 4 — 3D Scenes and WebGL</a></span><span><span class="ctx-label">lesson</span><a href="../../units/04-3d-scenes-and-webgl/lessons/44-light-and-materials.html">4.4 Light &amp; Materials</a></span><span><span class="ctx-label">assignment</span><a href="../../assignments/3d-scene.html">3D Scene with WebGL</a></span><span><span class="ctx-label">in class</span>15-minute isolation exercise</span></div>
+</section>
+
+<main class="workspace">
+  <section class="panel">
+    <div id="canvas-container"></div>
+    <div class="status-strip" id="statusStrip"></div>
+  </section>
+  <aside class="panel">
+    <div class="control-group"><label>Shape</label><select id="shapeSelect" onchange="updateUI()"><option>sphere</option><option>box</option><option>torus</option><option>cone</option></select></div>
+    <div class="control-group"><label>Light type</label><select id="lightSelect" onchange="updateUI()"><option value="directional">directional</option><option value="point">point</option><option value="ambient">ambient only</option><option value="mixed">mixed scene</option></select></div>
+    <div class="control-group"><label>Material</label><select id="materialSelect" onchange="updateUI()"><option value="normal">normalMaterial()</option><option value="ambient">ambientMaterial()</option><option value="specular">specularMaterial()</option></select></div>
+    <div class="control-group">
+      <label>Light angle <span class="value-pill" id="angleLabel">35°</span></label>
+      <input type="range" id="angleSlider" min="-90" max="90" value="35" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Material hue <span class="value-pill" id="hueLabel">24</span></label>
+      <input type="range" id="hueSlider" min="0" max="360" value="24" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Spin <span class="value-pill" id="spinLabel">on</span></label>
+      <input type="range" id="spinSlider" min="0" max="1" value="1" oninput="updateUI()">
+    </div>
+    <div class="btn-row"><button class="primary-btn" onclick="resetTool()">Reset</button><button class="secondary-btn" onclick="randomizeTool()">Randomize</button></div>
+  </aside>
+</main>
+
+<section class="prompt-row">
+  <div class="prompt-card try"><h3>Try this</h3><p>Hold the material constant and switch light types. Which light makes the object's surface easiest to read?</p></div>
+  <div class="prompt-card notice"><h3>Notice this</h3><p><code>normalMaterial()</code> ignores your color choice because it colors by surface direction.</p></div>
+  <div class="prompt-card remix"><h3>Remix this</h3><p>Use a point light, then move the light angle. How does its effect differ from light coming from one direction?</p></div>
+</section>
+
+<div class="code-panel"><button class="copy-btn" onclick="copyCode()">Copy code</button><pre id="codeOutput"></pre></div>
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+<script src="../../assets/vendor/p5.min.js"></script>
+<script>
+let state = { shape:'sphere', light:'directional', material:'normal', angle:35, hue:24, spin:1 };
+
+function setup() {
+  const c = createCanvas(560, 380, WEBGL);
+  c.parent('canvas-container');
+  colorMode(HSB, 360, 100, 100);
+  updateUI();
+}
+
+function draw() {
+  background(34, 8, 98);
+  orbitBackdrop();
+  applyLights();
+  rotateY(state.spin ? frameCount * 0.012 : radians(25));
+  rotateX(-0.25);
+  applyMaterial();
+  noStroke();
+  if (state.shape === 'sphere') sphere(92, 42, 24);
+  if (state.shape === 'box') box(145);
+  if (state.shape === 'torus') torus(88, 26, 48, 16);
+  if (state.shape === 'cone') cone(86, 160, 48, 12);
+}
+
+function orbitBackdrop() {
+  push();
+  translate(0, 120, -120);
+  rotateX(HALF_PI);
+  noFill();
+  stroke(215, 10, 62, .28);
+  for (let r = 80; r <= 230; r += 38) circle(0, 0, r * 2);
+  pop();
+}
+
+function applyLights() {
+  ambientLight(0, 0, state.light === 'ambient' ? 78 : 28);
+  const a = radians(state.angle);
+  if (state.light === 'directional' || state.light === 'mixed') directionalLight(35, 18, 95, cos(a), -0.6, sin(a));
+  if (state.light === 'point' || state.light === 'mixed') pointLight(state.hue, 70, 95, cos(a) * 220, -110, sin(a) * 220);
+}
+
+function applyMaterial() {
+  if (state.material === 'normal') normalMaterial();
+  if (state.material === 'ambient') ambientMaterial(state.hue, 58, 86);
+  if (state.material === 'specular') {
+    specularMaterial(state.hue, 72, 96);
+    shininess(70);
+  }
+}
+
+function updateUI() {
+  state.shape = document.getElementById('shapeSelect').value;
+  state.light = document.getElementById('lightSelect').value;
+  state.material = document.getElementById('materialSelect').value;
+  state.angle = parseInt(document.getElementById('angleSlider').value);
+  state.hue = parseInt(document.getElementById('hueSlider').value);
+  state.spin = parseInt(document.getElementById('spinSlider').value);
+  document.getElementById('angleLabel').textContent = state.angle + '°';
+  document.getElementById('hueLabel').textContent = state.hue;
+  document.getElementById('spinLabel').textContent = state.spin ? 'on' : 'off';
+  document.getElementById('statusStrip').innerHTML = [`light: ${state.light}`, `material: ${state.material}`, `shape: ${state.shape}`].map(s => `<span class="status-pill">${s}</span>`).join('');
+  updateCodeView();
+}
+
+function updateCodeView() {
+  const lightCode = {
+    directional: `ambientLight(40);\ndirectionalLight(255, 255, 255, ${Math.cos(radians(state.angle)).toFixed(2)}, -0.6, ${Math.sin(radians(state.angle)).toFixed(2)});`,
+    point: `ambientLight(35);\npointLight(255, 220, 180, ${Math.round(Math.cos(radians(state.angle))*220)}, -110, ${Math.round(Math.sin(radians(state.angle))*220)});`,
+    ambient: `ambientLight(200);`,
+    mixed: `ambientLight(35);\ndirectionalLight(255, 255, 255, ${Math.cos(radians(state.angle)).toFixed(2)}, -0.6, ${Math.sin(radians(state.angle)).toFixed(2)});\npointLight(255, 220, 180, 160, -110, 120);`
+  }[state.light];
+  const matCode = state.material === 'normal' ? 'normalMaterial();' : state.material === 'ambient' ? `ambientMaterial(${state.hue}, 80, 90);` : `specularMaterial(${state.hue}, 80, 96);\nshininess(70);`;
+  document.getElementById('codeOutput').innerHTML =
+`createCanvas(500, 360, WEBGL);
+
+${lightCode}
+${matCode}
+
+${state.shape}();`;
+}
+function resetTool() {
+  document.getElementById('shapeSelect').value = 'sphere';
+  document.getElementById('lightSelect').value = 'directional';
+  document.getElementById('materialSelect').value = 'normal';
+  document.getElementById('angleSlider').value = 35;
+  document.getElementById('hueSlider').value = 24;
+  document.getElementById('spinSlider').value = 1;
+  updateUI();
+}
+function randomizeTool() {
+  const shapes = ['sphere','box','torus','cone'];
+  const lights = ['directional','point','ambient','mixed'];
+  const materials = ['normal','ambient','specular'];
+  document.getElementById('shapeSelect').value = shapes[Math.floor(Math.random()*shapes.length)];
+  document.getElementById('lightSelect').value = lights[Math.floor(Math.random()*lights.length)];
+  document.getElementById('materialSelect').value = materials[Math.floor(Math.random()*materials.length)];
+  document.getElementById('angleSlider').value = -70 + Math.floor(Math.random()*140);
+  document.getElementById('hueSlider').value = Math.floor(Math.random()*360);
+  updateUI();
+}
+function copyCode() { navigator.clipboard.writeText(document.getElementById('codeOutput').innerText); }
+</script>
+</body>
+</html>

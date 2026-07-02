@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Camera &amp; Perspective Lab — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/ig-theme.css">
+<style>
+  #canvas-container {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+  #canvas-container canvas {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    border-radius: var(--radius-xs);
+  }
+  .camera-readout {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+  .camera-readout div {
+    background: var(--surface-sunken);
+    border-radius: var(--radius-xs);
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    color: var(--text-muted);
+  }
+  @media (max-width: 680px) {
+    .camera-readout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Interactive Graphics</a>
+  <nav><a href="../../units/index.html">Units</a><a href="../../tools/index.html">Tools</a><a href="../../assignments/index.html">Assignments</a><a href="../../teach/index.html">Teach</a><a href="../../journey/index.html">Journey</a><a href="../../guest/index.html">Guest Voices</a><a href="../../about/index.html">About</a></nav>
+</header>
+
+<section class="tool-header">
+  <div class="stage-tag">Unit 4 — Camera and Perspective</div>
+  <h1>Camera &amp; Perspective Lab</h1>
+  <p class="subtitle">Move the camera, change the projection, and watch the same scene become a different image without changing the objects.</p>
+  <p class="writing-note">The camera is a transformation system. It decides where the viewer stands, what the viewer looks at, and how depth is flattened onto the screen.</p>
+  <div class="concept-tags">camera · perspective · orthographic · field of view · clipping planes</div>
+  <div class="tool-context"><span><span class="ctx-label">unit</span><a href="../../units/04-3d-scenes-and-webgl/index.html">Unit 4 — 3D Scenes and WebGL</a></span><span><span class="ctx-label">lesson</span><a href="../../units/04-3d-scenes-and-webgl/lessons/47-camera-and-perspective.html">4.7 Camera &amp; Perspective</a> · <a href="../../units/04-3d-scenes-and-webgl/lessons/48-dimensions-and-perspectives.html">4.8 Dimensions and Perspectives</a></span><span><span class="ctx-label">assignment</span><a href="../../assignments/3d-scene.html">3D Scene with WebGL</a></span><span><span class="ctx-label">in class</span>15-minute exploration before scene work</span></div>
+</section>
+
+<main class="workspace">
+  <section class="panel">
+    <div id="canvas-container"></div>
+    <div class="status-strip" id="statusStrip"></div>
+    <div class="camera-readout" id="cameraReadout"></div>
+  </section>
+  <aside class="panel">
+    <div class="control-group">
+      <label>Projection</label>
+      <select id="projectionSelect" onchange="updateUI()">
+        <option value="perspective">perspective</option>
+        <option value="orthographic">orthographic</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Orbit angle <span class="value-pill" id="orbitLabel">35°</span></label>
+      <input type="range" id="orbitSlider" min="-120" max="120" value="35" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Camera distance <span class="value-pill" id="distanceLabel">520</span></label>
+      <input type="range" id="distanceSlider" min="260" max="820" value="520" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Camera height <span class="value-pill" id="heightLabel">180</span></label>
+      <input type="range" id="heightSlider" min="40" max="340" value="180" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Field of view <span class="value-pill" id="fovLabel">58°</span></label>
+      <input type="range" id="fovSlider" min="24" max="104" value="58" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Near plane <span class="value-pill" id="nearLabel">90</span></label>
+      <input type="range" id="nearSlider" min="30" max="260" value="90" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Far plane <span class="value-pill" id="farLabel">920</span></label>
+      <input type="range" id="farSlider" min="420" max="1400" value="920" oninput="updateUI()">
+    </div>
+    <div class="btn-row">
+      <button class="primary-btn" onclick="resetTool()">Reset</button>
+      <button class="secondary-btn" onclick="frameWide()">Wide lens</button>
+      <button class="secondary-btn" onclick="frameOrtho()">Orthographic</button>
+    </div>
+    <p class="mini-note">The left view is the rendered scene. The right view is a top-down diagram of the same camera and clipping volume.</p>
+  </aside>
+</main>
+
+<section class="prompt-row">
+  <div class="prompt-card try"><h3>Try this</h3><p>Keep the camera still and switch projection modes. Which objects change size in perspective but stay stable in orthographic?</p></div>
+  <div class="prompt-card notice"><h3>Notice this</h3><p>The near and far planes do not move objects. They decide which depths the camera is allowed to draw.</p></div>
+  <div class="prompt-card remix"><h3>Remix this</h3><p>Use a wide field of view and move close to the scene. How does that compare to backing up with a narrow field of view?</p></div>
+</section>
+
+<div class="code-panel"><button class="copy-btn" onclick="copyCode()">Copy code</button><pre id="codeOutput"></pre></div>
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+
+<script src="../../assets/vendor/p5.min.js"></script>
+<script>
+const VIEW = { w: 900, h: 460, sceneW: 610, mapX: 636, mapY: 56, mapW: 228, mapH: 340 };
+const EDGES = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+const OBJECTS = [
+  { name:'cube', center:[0,0,0], size:[120,120,120], color:'#3D5A80' },
+  { name:'tower', center:[-180,10,-120], size:[80,180,80], color:'#E07A5F' },
+  { name:'slab', center:[190,45,130], size:[160,70,100], color:'#81B29A' },
+  { name:'far frame', center:[0,-20,-330], size:[220,90,60], color:'#F2CC8F' }
+];
+const FLOOR_LINES = [-320,-160,0,160,320];
+let state = { projection:'perspective', orbit:35, distance:520, height:180, fov:58, near:90, far:920 };
+
+function setup() {
+  const s = canvasSize();
+  const c = createCanvas(s.w, s.h);
+  c.parent('canvas-container');
+  textFont('DM Sans');
+  updateUI();
+}
+
+function draw() {
+  background(255);
+  push();
+  scale(width / VIEW.w, height / VIEW.h);
+  drawScenePanel();
+  drawMapPanel();
+  pop();
+}
+
+function canvasSize() {
+  const holder = document.getElementById('canvas-container');
+  const viewport = Math.max(280, (window.innerWidth || VIEW.w) - 64);
+  const holderWidth = holder ? holder.clientWidth : viewport;
+  const available = holderWidth > 0 ? Math.min(holderWidth, viewport) : viewport;
+  const w = Math.max(280, Math.min(VIEW.w, available));
+  return { w, h: Math.round(w * VIEW.h / VIEW.w) };
+}
+
+function windowResized() {
+  const s = canvasSize();
+  resizeCanvas(s.w, s.h);
+}
+
+function cameraBasis() {
+  const a = radians(state.orbit);
+  const eye = [Math.sin(a) * state.distance, state.height, Math.cos(a) * state.distance];
+  const target = [0, 0, 0];
+  const forward = normalize(sub(target, eye));
+  const right = normalize(cross(forward, [0, 1, 0]));
+  const up = normalize(cross(right, forward));
+  return { eye, target, forward, right, up };
+}
+
+function worldToCamera(p) {
+  const cam = cameraBasis();
+  const v = sub(p, cam.eye);
+  return [dot(v, cam.right), dot(v, cam.up), dot(v, cam.forward)];
+}
+
+function projectPoint(p) {
+  const c = worldToCamera(p);
+  const z = c[2];
+  const clipped = z < state.near || z > state.far;
+  const aspect = VIEW.sceneW / VIEW.h;
+  if (state.projection === 'orthographic') {
+    const scale = 0.92;
+    return { x: VIEW.sceneW / 2 + c[0] * scale, y: VIEW.h / 2 - c[1] * scale, z, clipped };
+  }
+  const f = (VIEW.sceneW * 0.5) / Math.tan(radians(state.fov) / 2);
+  return { x: VIEW.sceneW / 2 + (c[0] * f / Math.max(z, 1)) / aspect, y: VIEW.h / 2 - c[1] * f / Math.max(z, 1), z, clipped };
+}
+
+function drawScenePanel() {
+  push();
+  noStroke();
+  fill(250, 246, 240);
+  rect(0, 0, VIEW.sceneW, VIEW.h);
+  drawGround();
+  const drawn = [];
+  OBJECTS.forEach(obj => {
+    const verts = boxVertices(obj.center, obj.size);
+    const pts = verts.map(projectPoint);
+    const visible = pts.some(p => !p.clipped);
+    drawn.push(visible);
+    stroke(visible ? obj.color : 'rgba(44,42,38,0.18)');
+    strokeWeight(visible ? 2 : 1);
+    noFill();
+    EDGES.forEach(edge => {
+      const a = pts[edge[0]], b = pts[edge[1]];
+      if (!a.clipped && !b.clipped) line(a.x, a.y, b.x, b.y);
+      else dashedLine(a.x, a.y, b.x, b.y);
+    });
+  });
+  noStroke();
+  fill(44, 42, 38, 180);
+  textSize(12);
+  text('rendered camera view', 18, 24);
+  pop();
+}
+
+function drawGround() {
+  stroke('rgba(44,42,38,0.18)');
+  strokeWeight(1);
+  FLOOR_LINES.forEach(v => {
+    const a = projectPoint([-360, 120, v]);
+    const b = projectPoint([360, 120, v]);
+    const c = projectPoint([v, 120, -360]);
+    const d = projectPoint([v, 120, 360]);
+    if (!a.clipped && !b.clipped) line(a.x, a.y, b.x, b.y);
+    if (!c.clipped && !d.clipped) line(c.x, c.y, d.x, d.y);
+  });
+}
+
+function drawMapPanel() {
+  const cam = cameraBasis();
+  push();
+  translate(VIEW.mapX, VIEW.mapY);
+  noStroke();
+  fill(61, 90, 128, 14);
+  rect(0, 0, VIEW.mapW, VIEW.mapH, 8);
+  stroke(44, 42, 38, 34);
+  for (let i = 0; i <= 4; i++) {
+    line(i * VIEW.mapW / 4, 0, i * VIEW.mapW / 4, VIEW.mapH);
+    line(0, i * VIEW.mapH / 4, VIEW.mapW, i * VIEW.mapH / 4);
+  }
+  drawFrustum(cam);
+  OBJECTS.forEach(obj => {
+    const p = mapPoint(obj.center);
+    noStroke();
+    fill(obj.color);
+    rect(p[0] - 5, p[1] - 5, 10, 10, 2);
+  });
+  const eye = mapPoint(cam.eye);
+  fill(44, 42, 38);
+  circle(eye[0], eye[1], 10);
+  stroke(44, 42, 38);
+  const target = mapPoint(cam.target);
+  line(eye[0], eye[1], target[0], target[1]);
+  noStroke();
+  fill(44, 42, 38, 180);
+  textSize(12);
+  text('top-down camera diagram', 10, -16);
+  pop();
+}
+
+function drawFrustum(cam) {
+  const nearCenter = add(cam.eye, mul(cam.forward, state.near));
+  const farCenter = add(cam.eye, mul(cam.forward, state.far));
+  const nearHalf = state.projection === 'orthographic' ? 115 : Math.tan(radians(state.fov) / 2) * state.near;
+  const farHalf = state.projection === 'orthographic' ? 115 : Math.tan(radians(state.fov) / 2) * state.far;
+  const nearL = add(nearCenter, mul(cam.right, -nearHalf));
+  const nearR = add(nearCenter, mul(cam.right, nearHalf));
+  const farL = add(farCenter, mul(cam.right, -farHalf));
+  const farR = add(farCenter, mul(cam.right, farHalf));
+  const pts = [nearL, nearR, farR, farL].map(mapPoint);
+  noStroke();
+  fill(224, 122, 95, 32);
+  beginShape();
+  pts.forEach(p => vertex(p[0], p[1]));
+  endShape(CLOSE);
+  stroke(224, 122, 95);
+  strokeWeight(1.5);
+  line(pts[0][0], pts[0][1], pts[1][0], pts[1][1]);
+  line(pts[2][0], pts[2][1], pts[3][0], pts[3][1]);
+  line(pts[0][0], pts[0][1], pts[3][0], pts[3][1]);
+  line(pts[1][0], pts[1][1], pts[2][0], pts[2][1]);
+}
+
+function mapPoint(p) {
+  const s = 0.18;
+  return [VIEW.mapW / 2 + p[0] * s, VIEW.mapH / 2 + p[2] * s];
+}
+
+function boxVertices(center, size) {
+  const [cx, cy, cz] = center, [w, h, d] = size;
+  const x = w / 2, y = h / 2, z = d / 2;
+  return [
+    [cx-x, cy-y, cz-z], [cx+x, cy-y, cz-z], [cx+x, cy+y, cz-z], [cx-x, cy+y, cz-z],
+    [cx-x, cy-y, cz+z], [cx+x, cy-y, cz+z], [cx+x, cy+y, cz+z], [cx-x, cy+y, cz+z]
+  ];
+}
+
+function dashedLine(x1, y1, x2, y2) {
+  drawingContext.setLineDash([4, 5]);
+  line(x1, y1, x2, y2);
+  drawingContext.setLineDash([]);
+}
+
+function updateUI() {
+  state.projection = document.getElementById('projectionSelect').value;
+  state.orbit = parseInt(document.getElementById('orbitSlider').value);
+  state.distance = parseInt(document.getElementById('distanceSlider').value);
+  state.height = parseInt(document.getElementById('heightSlider').value);
+  state.fov = parseInt(document.getElementById('fovSlider').value);
+  state.near = parseInt(document.getElementById('nearSlider').value);
+  state.far = Math.max(parseInt(document.getElementById('farSlider').value), state.near + 120);
+  document.getElementById('farSlider').value = state.far;
+  document.getElementById('orbitLabel').textContent = state.orbit + '°';
+  document.getElementById('distanceLabel').textContent = state.distance;
+  document.getElementById('heightLabel').textContent = state.height;
+  document.getElementById('fovLabel').textContent = state.fov + '°';
+  document.getElementById('nearLabel').textContent = state.near;
+  document.getElementById('farLabel').textContent = state.far;
+  renderReadouts();
+  renderCode();
+}
+
+function renderReadouts() {
+  const cam = cameraBasis();
+  const eye = cam.eye.map(n => Math.round(n));
+  document.getElementById('statusStrip').innerHTML = [
+    `projection: ${state.projection}`,
+    `fov: ${state.projection === 'perspective' ? state.fov + '°' : 'locked'}`,
+    `clip: ${state.near}-${state.far}`
+  ].map(s => `<span class="status-pill">${s}</span>`).join('');
+  document.getElementById('cameraReadout').innerHTML =
+    `<div>eye: [${eye.join(', ')}]</div>` +
+    `<div>target: [0, 0, 0]</div>` +
+    `<div>near plane: ${state.near}</div>` +
+    `<div>far plane: ${state.far}</div>`;
+}
+
+function renderCode() {
+  const cam = cameraBasis();
+  const eye = cam.eye.map(n => Math.round(n));
+  const projectionLine = state.projection === 'perspective'
+    ? `<span class="fn">perspective</span>(PI / <span class="num">${(180 / state.fov).toFixed(1)}</span>, width / height, <span class="num">${state.near}</span>, <span class="num">${state.far}</span>);`
+    : `<span class="fn">ortho</span>(-width / <span class="num">2</span>, width / <span class="num">2</span>, -height / <span class="num">2</span>, height / <span class="num">2</span>, <span class="num">${state.near}</span>, <span class="num">${state.far}</span>);`;
+  document.getElementById('codeOutput').innerHTML =
+`<span class="cm">// same scene, different camera choices</span>
+${projectionLine}
+<span class="fn">camera</span>(
+  <span class="num">${eye[0]}</span>, <span class="num">${eye[1]}</span>, <span class="num">${eye[2]}</span>,
+  <span class="num">0</span>, <span class="num">0</span>, <span class="num">0</span>,
+  <span class="num">0</span>, <span class="num">1</span>, <span class="num">0</span>
+);`;
+}
+
+function resetTool() {
+  document.getElementById('projectionSelect').value = 'perspective';
+  document.getElementById('orbitSlider').value = 35;
+  document.getElementById('distanceSlider').value = 520;
+  document.getElementById('heightSlider').value = 180;
+  document.getElementById('fovSlider').value = 58;
+  document.getElementById('nearSlider').value = 90;
+  document.getElementById('farSlider').value = 920;
+  updateUI();
+}
+
+function frameWide() {
+  document.getElementById('projectionSelect').value = 'perspective';
+  document.getElementById('distanceSlider').value = 310;
+  document.getElementById('fovSlider').value = 96;
+  document.getElementById('nearSlider').value = 40;
+  updateUI();
+}
+
+function frameOrtho() {
+  document.getElementById('projectionSelect').value = 'orthographic';
+  document.getElementById('distanceSlider').value = 640;
+  document.getElementById('fovSlider').value = 58;
+  updateUI();
+}
+
+function copyCode() { navigator.clipboard.writeText(document.getElementById('codeOutput').innerText); }
+
+function sub(a,b){ return [a[0]-b[0], a[1]-b[1], a[2]-b[2]]; }
+function add(a,b){ return [a[0]+b[0], a[1]+b[1], a[2]+b[2]]; }
+function mul(a,s){ return [a[0]*s, a[1]*s, a[2]*s]; }
+function dot(a,b){ return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]; }
+function cross(a,b){ return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
+function normalize(a){ const m = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0]/m, a[1]/m, a[2]/m]; }
+</script>
+</body>
+</html>

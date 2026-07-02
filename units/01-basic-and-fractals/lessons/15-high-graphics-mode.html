@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 1.5: High Graphics Mode — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 1 · Lesson 1.5</div>
+  <h1>High Graphics Mode</h1>
+  <p class="writing-note">The jump from lo-res to hi-res is not simply an upgrade. More pixels and fewer, stranger color choices change what kind of image is reasonable to make and what kind of code the image demands.</p>
+  <p class="lesson-meta">Source deck: 1.5 - Fractal Tree.pptx · 7 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked how original personal computers differ from modern computers and how older computers can still be used for graphics and animation. The lesson compared Apple II graphics modes: lo-res <code>GR</code> at 40 by 40 pixels with 16 nominal colors, and hi-res <code>HGR</code> at 280 by 160 pixels with 8 colors.</p>
+  <p>The new command was <code>HPLOT</code>, which made the higher-resolution screen programmable. This is the bridge toward a fractal tree: once the display can hold finer lines, repeated branching becomes visually legible.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="cm">REM lo-res graphics</span>
+<span class="fn">GR</span>
+<span class="fn">PLOT</span> <span class="num">20</span>, <span class="num">20</span>
+
+<span class="cm">REM hi-res graphics</span>
+<span class="fn">HGR</span>
+<span class="fn">HPLOT</span> <span class="num">140</span>, <span class="num">150</span> <span class="kw">TO</span> <span class="num">140</span>, <span class="num">80</span></pre></div>
+
+  <h2>Key idea</h2>
+  <p>Resolution is a creative constraint, not only a technical specification. A higher-resolution mode can make subtle structure possible, but it also changes the scale at which the program has to think.</p>
+
+  <h2>Try it</h2>
+  <p>Open Recursion Made Visible and set the reveal low. Each branch is a line, but the tree appears because the same line-drawing decision is repeated with changed scale and angle.</p>
+  <a class="tool-cta" href="../../../tools/recursion-made-visible/index.html">Open Recursion Made Visible →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="14-bouncing-ball.html">← Previous: Bouncing Ball</a>
+    <a href="16-remixing-fractal-tree.html">Next: Remixing the Fractal Tree →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

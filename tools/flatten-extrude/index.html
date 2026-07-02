@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flatten/Extrude — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/ig-theme.css">
+<style>
+  .mode-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Interactive Graphics</a>
+  <nav><a href="../../units/index.html">Units</a><a href="../../tools/index.html">Tools</a><a href="../../assignments/index.html">Assignments</a><a href="../../teach/index.html">Teach</a><a href="../../journey/index.html">Journey</a><a href="../../guest/index.html">Guest Voices</a><a href="../../about/index.html">About</a></nav>
+</header>
+
+<section class="tool-header">
+  <div class="stage-tag">Unit 2 — 2D to 3D</div>
+  <h1>Flatten/Extrude</h1>
+  <p class="subtitle">Start with a flat shape. Add depth. Rotate it. The third dimension becomes a choice you can see instead of a word you memorize.</p>
+  <p class="writing-note">Extrusion makes the third dimension concrete. A front face is copied backward, matching vertices are connected, and the side faces appear as a consequence of that operation.</p>
+  <div class="concept-tags">x/y/z · extrusion · depth · projection</div>
+  <div class="tool-context"><span><span class="ctx-label">unit</span><a href="../../units/02-2d-to-3d/index.html">Unit 2 — 2D to 3D</a></span><span><span class="ctx-label">lesson</span><a href="../../units/02-2d-to-3d/lessons/21-making-3d-shapes.html">2.1 Making 3D Shapes</a></span><span><span class="ctx-label">assignment</span><a href="../../assignments/converting-to-p5js.html">Converting BASIC to p5.js</a></span><span><span class="ctx-label">in class</span>5-minute opener before WebGL</span></div>
+</section>
+
+<main class="workspace">
+  <section class="panel">
+    <div id="canvas-container"></div>
+    <div class="status-strip" id="statusStrip"></div>
+  </section>
+  <aside class="panel">
+    <div class="mode-row" id="shapeButtons"></div>
+    <div class="control-group">
+      <label>Extrude depth <span class="value-pill" id="depthLabel">70</span></label>
+      <input type="range" id="depthSlider" min="0" max="160" value="70" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Rotation <span class="value-pill" id="rotLabel">28°</span></label>
+      <input type="range" id="rotSlider" min="-60" max="60" value="28" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Lift <span class="value-pill" id="liftLabel">18</span></label>
+      <input type="range" id="liftSlider" min="-50" max="80" value="18" oninput="updateUI()">
+    </div>
+    <div class="btn-row"><button class="primary-btn" onclick="resetTool()">Reset</button><button class="secondary-btn" onclick="setDepthZero()">Flatten</button></div>
+    <p class="mini-note">The drawing is an isometric projection, so both the front face and the back face remain visible.</p>
+  </aside>
+</main>
+
+<section class="prompt-row">
+  <div class="prompt-card try"><h3>Try this</h3><p>Slide depth to zero, then slowly add it back. What new edges have to appear?</p></div>
+  <div class="prompt-card notice"><h3>Notice this</h3><p>The front shape does not change. Extrusion creates a second copy behind it, then connects matching vertices.</p></div>
+  <div class="prompt-card remix"><h3>Remix this</h3><p>Switch from rectangle to triangle. Which shape makes the side faces easiest to count?</p></div>
+</section>
+
+<div class="code-panel"><button class="copy-btn" onclick="copyCode()">Copy WEBGL sketch</button><pre id="codeOutput"></pre></div>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+<script src="../../assets/vendor/p5.min.js"></script>
+<script>
+let state = { shape:'rectangle', depth:70, rot:28, lift:18 };
+const SHAPES = {
+  rectangle: [[-80,-48],[80,-48],[80,48],[-80,48]],
+  triangle: [[0,-78],[86,62],[-86,62]],
+  house: [[-78,50],[78,50],[78,-20],[0,-82],[-78,-20]],
+  diamond: [[0,-82],[92,0],[0,82],[-92,0]]
+};
+
+function setup() {
+  const c = createCanvas(560, 360);
+  c.parent('canvas-container');
+  updateUI();
+}
+
+function draw() {
+  background(255);
+  translate(width/2, height/2 + state.lift);
+  const front = SHAPES[state.shape].map(p => project([p[0], p[1], 0]));
+  const back = SHAPES[state.shape].map(p => project([p[0], p[1], -state.depth]));
+  noStroke();
+  fill(61,90,128,45);
+  for (let i = 0; i < front.length; i++) {
+    const j = (i+1) % front.length;
+    quad(front[i][0],front[i][1],front[j][0],front[j][1],back[j][0],back[j][1],back[i][0],back[i][1]);
+  }
+  fill(242,204,143,155);
+  drawPoly(back);
+  fill(224,122,95,205);
+  drawPoly(front);
+  stroke('#2C2A26');
+  strokeWeight(2);
+  drawLines(front);
+  drawLines(back);
+  for (let i = 0; i < front.length; i++) line(front[i][0],front[i][1],back[i][0],back[i][1]);
+}
+
+function project([x,y,z]) {
+  const a = radians(state.rot);
+  const xr = x*cos(a) - z*sin(a);
+  const zr = x*sin(a) + z*cos(a);
+  return [xr + zr*.42, y + zr*.24];
+}
+function drawPoly(points) { beginShape(); for (const p of points) vertex(p[0], p[1]); endShape(CLOSE); }
+function drawLines(points) { for (let i = 0; i < points.length; i++) { const j = (i+1)%points.length; line(points[i][0],points[i][1],points[j][0],points[j][1]); } }
+
+function updateUI() {
+  state.depth = parseInt(document.getElementById('depthSlider').value);
+  state.rot = parseInt(document.getElementById('rotSlider').value);
+  state.lift = parseInt(document.getElementById('liftSlider').value);
+  document.getElementById('depthLabel').textContent = state.depth;
+  document.getElementById('rotLabel').textContent = state.rot + '°';
+  document.getElementById('liftLabel').textContent = state.lift;
+  renderShapeButtons();
+  document.getElementById('statusStrip').innerHTML = [`vertices: ${SHAPES[state.shape].length}`, `side faces: ${SHAPES[state.shape].length}`, `depth: ${state.depth}`].map(s => `<span class="status-pill">${s}</span>`).join('');
+  updateCodeView();
+}
+function renderShapeButtons() {
+  document.getElementById('shapeButtons').innerHTML = Object.keys(SHAPES).map(name => `<button class="toggle-btn ${state.shape===name?'active':''}" onclick="setShape('${name}')">${name}</button>`).join('');
+}
+function setShape(name) { state.shape = name; updateUI(); }
+function setDepthZero() { document.getElementById('depthSlider').value = 0; updateUI(); }
+function resetTool() {
+  state = { shape:'rectangle', depth:70, rot:28, lift:18 };
+  document.getElementById('depthSlider').value = 70;
+  document.getElementById('rotSlider').value = 28;
+  document.getElementById('liftSlider').value = 18;
+  updateUI();
+}
+function updateCodeView() {
+  const points = SHAPES[state.shape].map(p => `[${p[0]}, ${p[1]}]`).join(', ');
+  document.getElementById('codeOutput').innerHTML =
+`const face = [${points}];
+const depth = <span class="hi num">${state.depth}</span>;
+
+<span class="cm">// front vertex</span>
+vertex(x, y, 0);
+
+<span class="cm">// matching back vertex creates thickness</span>
+vertex(x, y, -depth);
+
+<span class="cm">// connect matching points to make side faces</span>`;
+}
+function copyCode() { navigator.clipboard.writeText(document.getElementById('codeOutput').innerText); }
+</script>
+</body>
+</html>

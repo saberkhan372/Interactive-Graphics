@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 0.7: Review HTML and JavaScript — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 0 · Lesson 0.7</div>
+  <h1>Review HTML and JavaScript</h1>
+  <p class="writing-note">The final lesson in the opening sequence turns reflection into setup. After following and improving pixel directions, students review the files that let a sketch run in the browser and type a small WebGL example themselves.</p>
+  <p class="lesson-meta">Source deck: 0.7 - Review HTML and JS.pptx · 8 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked students how it felt to follow someone else's directions and whether those directions could be optimized. The lesson then reviewed HTML, CSS, and JavaScript, with special attention to the HTML file as the page the browser renders and the place where libraries and scripts are loaded.</p>
+  <p>The activity asked students to create a folder, make <code>index.html</code> and <code>sketch.js</code>, open the HTML file in a browser, and type out a WebGL box example rather than copying and pasting. That typing mattered: it made the file relationship, the function names, and the error surface visible.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="cm">// sketch.js</span>
+<span class="kw">function</span> <span class="fn">setup</span>() {
+  <span class="fn">createCanvas</span>(<span class="num">400</span>, <span class="num">400</span>, <span class="hi">WEBGL</span>);
+}
+
+<span class="kw">function</span> <span class="fn">draw</span>() {
+  <span class="fn">background</span>(<span class="num">220</span>);
+  <span class="fn">rotateY</span>(frameCount * <span class="num">0.01</span>);
+  <span class="fn">box</span>(<span class="num">100</span>);
+}</pre></div>
+
+  <h2>Key idea</h2>
+  <p>The browser project is a system of responsibilities. HTML loads the page and scripts, CSS can style the surface, and JavaScript supplies the behavior. Once that structure is visible, p5.js and WebGL become tools students can inspect rather than magic they have to trust.</p>
+
+  <h2>Try it</h2>
+  <p>Return to the Unit 0 tools and read them as web pages: a visible interface, a drawing surface, and JavaScript rules underneath. The next units keep that same structure while changing the graphics system.</p>
+  <a class="tool-cta" href="../../../tools/pixel-algorithm-playground/index.html">Open Pixel Algorithm Playground →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="06-pixel-algorithm.html">← Previous: Pixel Algorithm</a>
+    <a href="../../01-basic-and-fractals/index.html">Next: Unit 1 — BASIC and Fractals →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

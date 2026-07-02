@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recursion Made Visible — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/ig-theme.css">
+<style>
+  .stack-bars { margin-top:12px; display:grid; gap:5px; }
+  .stack-bar { height:18px; border-radius:999px; background:rgba(61,90,128,.12); overflow:hidden; position:relative; }
+  .stack-bar span { display:block; height:100%; background:var(--success); }
+  .stack-bar em { position:absolute; left:8px; top:1px; font-style:normal; font-family:var(--font-mono); font-size:11px; color:var(--ink); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Interactive Graphics</a>
+  <nav><a href="../../units/index.html">Units</a><a href="../../tools/index.html">Tools</a><a href="../../assignments/index.html">Assignments</a><a href="../../teach/index.html">Teach</a><a href="../../journey/index.html">Journey</a><a href="../../guest/index.html">Guest Voices</a><a href="../../about/index.html">About</a></nav>
+</header>
+
+<section class="tool-header">
+  <div class="stage-tag">Unit 1 — BASIC and Fractals</div>
+  <h1>Recursion Made Visible</h1>
+  <p class="subtitle">A fractal tree draws itself while the call structure is counted beside it. Recursion becomes easier to read when you can see the repeated promise: draw one branch, then ask for two smaller branches.</p>
+  <p class="writing-note">Recursion is often taught as a mysterious idea, but the mechanism is plain: draw a branch, ask for two smaller branches, and stop when the base case is reached. The complexity comes from repetition, not from a more complicated rule.</p>
+  <div class="concept-tags">recursion · base case · branching · call depth</div>
+  <div class="tool-context"><span><span class="ctx-label">unit</span><a href="../../units/01-basic-and-fractals/index.html">Unit 1 — BASIC and Fractals</a></span><span><span class="ctx-label">lesson</span><a href="../../units/01-basic-and-fractals/lessons/16-remixing-fractal-tree.html">1.6 Remixing the Fractal Tree</a></span><span><span class="ctx-label">assignment</span><a href="../../assignments/basic-animation.html">BASIC Animation</a></span><span><span class="ctx-label">in class</span>10-minute demo or a 25-minute exploration</span></div>
+</section>
+
+<main class="workspace">
+  <section class="panel">
+    <div id="canvas-container"></div>
+    <div class="status-strip" id="statusStrip"></div>
+  </section>
+  <aside class="panel">
+    <div class="control-group">
+      <label>Depth <span class="value-pill" id="depthLabel">7</span></label>
+      <input type="range" id="depthSlider" min="1" max="10" value="7" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Branch angle <span class="value-pill" id="angleLabel">28°</span></label>
+      <input type="range" id="angleSlider" min="5" max="60" value="28" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Shrink <span class="value-pill" id="shrinkLabel">0.67</span></label>
+      <input type="range" id="shrinkSlider" min="45" max="82" value="67" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Show only to depth <span class="value-pill" id="revealLabel">7</span></label>
+      <input type="range" id="revealSlider" min="1" max="10" value="7" oninput="updateUI()">
+    </div>
+    <div class="stack-bars" id="stackBars"></div>
+    <div class="btn-row"><button class="primary-btn" onclick="resetTool()">Reset</button><button class="secondary-btn" onclick="randomizeTool()">Randomize</button></div>
+  </aside>
+</main>
+
+<section class="prompt-row">
+  <div class="prompt-card try"><h3>Try this</h3><p>Set the reveal slider to 1, then increase it one level at a time. Count how quickly the number of branches grows.</p></div>
+  <div class="prompt-card notice"><h3>Notice this</h3><p>The rule never gets more complicated. The complexity comes from repeating the same rule on smaller branches.</p></div>
+  <div class="prompt-card remix"><h3>Remix this</h3><p>Use a small angle and a large shrink. How does overlap change the readability of the branching pattern?</p></div>
+</section>
+
+<div class="code-panel"><button class="copy-btn" onclick="copyCode()">Copy code</button><pre id="codeOutput"></pre></div>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+<script src="../../assets/vendor/p5.min.js"></script>
+<script>
+let state = { depth:7, angle:28, shrink:.67, reveal:7 };
+let counts = [];
+
+function setup() {
+  const c = createCanvas(560, 420);
+  c.parent('canvas-container');
+  updateUI();
+}
+
+function draw() {
+  background(255);
+  translate(width/2, height-26);
+  strokeCap(ROUND);
+  counts = Array(state.depth + 1).fill(0);
+  drawBranch(94, -90, 0);
+}
+
+function drawBranch(len, dirDeg, level) {
+  if (level >= state.reveal || level >= state.depth || len < 3) return;
+  counts[level]++;
+  const a = radians(dirDeg);
+  const x2 = cos(a) * len;
+  const y2 = sin(a) * len;
+  strokeWeight(map(state.depth - level, 0, state.depth, 1, 8));
+  stroke(level < 2 ? '#3D5A80' : '#81B29A');
+  line(0, 0, x2, y2);
+  push();
+  translate(x2, y2);
+  drawBranch(len * state.shrink, dirDeg - state.angle, level + 1);
+  drawBranch(len * state.shrink, dirDeg + state.angle, level + 1);
+  pop();
+}
+
+function updateUI() {
+  state.depth = parseInt(document.getElementById('depthSlider').value);
+  state.angle = parseInt(document.getElementById('angleSlider').value);
+  state.shrink = parseInt(document.getElementById('shrinkSlider').value) / 100;
+  state.reveal = Math.min(parseInt(document.getElementById('revealSlider').value), state.depth);
+  document.getElementById('revealSlider').max = state.depth;
+  document.getElementById('depthLabel').textContent = state.depth;
+  document.getElementById('angleLabel').textContent = state.angle + '°';
+  document.getElementById('shrinkLabel').textContent = state.shrink.toFixed(2);
+  document.getElementById('revealLabel').textContent = state.reveal;
+  setTimeout(renderReadouts, 20);
+  updateCodeView();
+}
+
+function renderReadouts() {
+  const total = counts.reduce((a,b) => a + b, 0);
+  document.getElementById('statusStrip').innerHTML = [`visible calls: ${total}`, `base case: level ${state.depth}`, `angle: ${state.angle}°`].map(s => `<span class="status-pill">${s}</span>`).join('');
+  const maxCount = Math.max(1, ...counts);
+  document.getElementById('stackBars').innerHTML = counts.slice(0, state.depth).map((n, i) =>
+    `<div class="stack-bar"><span style="width:${(n/maxCount)*100}%"></span><em>depth ${i}: ${n} calls</em></div>`
+  ).join('');
+}
+
+function updateCodeView() {
+  document.getElementById('codeOutput').innerHTML =
+`function branch(length, level) {
+  if (level >= <span class="hi num">${state.depth}</span>) return; <span class="cm">// base case</span>
+
+  line(0, 0, 0, -length);
+  translate(0, -length);
+
+  rotate(-<span class="hi num">${state.angle}</span>);
+  branch(length * <span class="hi num">${state.shrink.toFixed(2)}</span>, level + 1);
+
+  rotate(<span class="hi num">${state.angle * 2}</span>);
+  branch(length * <span class="hi num">${state.shrink.toFixed(2)}</span>, level + 1);
+}`;
+}
+
+function resetTool() {
+  document.getElementById('depthSlider').value = 7;
+  document.getElementById('angleSlider').value = 28;
+  document.getElementById('shrinkSlider').value = 67;
+  document.getElementById('revealSlider').value = 7;
+  updateUI();
+}
+function randomizeTool() {
+  document.getElementById('depthSlider').value = 4 + Math.floor(Math.random()*6);
+  document.getElementById('angleSlider').value = 12 + Math.floor(Math.random()*42);
+  document.getElementById('shrinkSlider').value = 52 + Math.floor(Math.random()*25);
+  updateUI();
+  document.getElementById('revealSlider').value = state.depth;
+  updateUI();
+}
+function copyCode() { navigator.clipboard.writeText(document.getElementById('codeOutput').innerText); }
+</script>
+</body>
+</html>

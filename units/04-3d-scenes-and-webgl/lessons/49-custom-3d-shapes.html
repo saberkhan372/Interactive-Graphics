@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 4.9: Custom 3D Shapes — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 4 · Lesson 4.9</div>
+  <h1>Custom 3D Shapes</h1>
+  <p class="writing-note">A custom shape removes the comfort of built-in primitives. Students have to decide which vertices exist, in what order they should be connected, and how those decisions produce a surface.</p>
+  <p class="lesson-meta">Source deck: IG 3.9 - Custom 3D shapes.pptx · 4 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked how camera options affect what is seen on screen. The lesson then moved toward custom geometry, using the same projection vocabulary from the previous lesson while preparing students to build shapes through explicit vertices instead of only through <code>box</code> or <code>sphere</code>.</p>
+  <p>Even when a slide deck is short, the curricular purpose is strong: the final WebGL project requires students to make at least one custom shape, so they need to understand that a 3D object can be authored point by point.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="fn">beginShape</span>();
+<span class="fn">vertex</span>(-<span class="num">80</span>, -<span class="num">80</span>, <span class="num">0</span>);
+<span class="fn">vertex</span>( <span class="num">80</span>, -<span class="num">80</span>, <span class="num">0</span>);
+<span class="fn">vertex</span>( <span class="num">0</span>,  <span class="num">80</span>, <span class="num">60</span>);
+<span class="fn">endShape</span>(CLOSE);</pre></div>
+
+  <h2>Key idea</h2>
+  <p>Custom geometry is ordered information. The computer connects vertices in the order the program gives them, so the list itself becomes the shape.</p>
+
+  <h2>Try it</h2>
+  <p>Open Vertex Sculptor and place three vertices. Then add a fourth and watch how the shape changes because the order changed the surface.</p>
+  <a class="tool-cta" href="../../../tools/vertex-sculptor/index.html">Open Vertex Sculptor →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="48-dimensions-and-perspectives.html">← Previous: Dimensions and Perspectives</a>
+    <a href="410-webgl-project.html">Next: WebGL Scene Project →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

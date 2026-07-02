@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tools — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/ig-theme.css">
+<style>
+  .page-head { padding: 40px clamp(16px,5vw,64px) 10px; }
+  .page-head h1 { font-family: var(--font-display); font-size: clamp(28px,4vw,40px); margin: 0 0 8px; }
+  .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 16px; padding: 10px clamp(16px,5vw,64px) 48px; max-width: 1100px; }
+  .tool-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 20px; text-decoration: none; color: var(--ink); }
+  .tool-card .unit-tag { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; }
+  .tool-card h3 { font-family: var(--font-display); font-size: 17px; margin: 6px 0 8px; }
+  .tool-card p { margin: 0 0 10px; font-size: 13px; color: rgba(44,42,38,0.7); }
+  .tool-card .concepts { font-family: var(--font-mono); font-size: 11px; color: var(--success); }
+  .tool-card.coming { opacity: 0.5; pointer-events: none; }
+</style>
+</head><body>
+<header class="site-header">
+  <a class="brand" href="../index.html">Interactive Graphics</a>
+  <nav><a href="../units/index.html">Units</a><a href="index.html">Tools</a><a href="../assignments/index.html">Assignments</a><a href="../teach/index.html">Teach</a><a href="../journey/index.html">Journey</a><a href="../guest/index.html">Guest Voices</a><a href="../about/index.html">About</a></nav>
+</header>
+<section class="page-head">
+  <h1>All Tools</h1>
+  <p style="max-width:60ch; color:rgba(44,42,38,0.72);">Every interactive exercise in one place, tagged by the concept it makes visible.</p>
+  <p class="writing-note">The tools are not decorations around the curriculum. They are the curriculum's method: a way to turn hidden rules, old constraints, and graphics pipeline math into something a student can manipulate before they are asked to name it formally.</p>
+</section>
+<div class="tool-grid">
+  <a class="tool-card" href="constraint-machine/index.html">
+    <canvas class="era-thumb card-media" data-era="appleii" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 0</div>
+    <h3>Constraint Machine</h3>
+    <p>Draw the same thing across four eras of graphics hardware and compare how the limits change.</p>
+    <div class="concepts">hardware constraint · color depth · history</div>
+  </a>
+  <a class="tool-card" href="pixel-algorithm-playground/index.html">
+    <canvas class="era-thumb card-media" data-era="appleii" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 0</div>
+    <h3>Pixel Algorithm Playground</h3>
+    <p>Write one small rule and watch it paint every cell of the grid — pattern from position alone.</p>
+    <div class="concepts">pixel grids · algorithms · nested loops · palettes</div>
+  </a>
+  <a class="tool-card" href="basic-p5-twin-panels/index.html">
+    <canvas class="era-thumb card-media" data-era="nes" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 1</div>
+    <h3>BASIC ↔ p5.js Twin Panels</h3>
+    <p>The same bouncing ball, 40 years apart, edited side by side.</p>
+    <div class="concepts">variables · translation · history of code</div>
+  </a>
+  <a class="tool-card" href="recursion-made-visible/index.html">
+    <canvas class="era-thumb card-media" data-era="web96" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 1</div>
+    <h3>Recursion Made Visible</h3>
+    <p>A fractal tree next to its own live call-tree diagram.</p>
+    <div class="concepts">recursion · call stack · fractals</div>
+  </a>
+  <a class="tool-card" href="flatten-extrude/index.html">
+    <canvas class="era-thumb card-media" data-era="web96" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 2</div>
+    <h3>Flatten/Extrude</h3>
+    <p>Watch a flat shape gain a third dimension in real time.</p>
+    <div class="concepts">2D vs 3D · z-depth</div>
+  </a>
+  <a class="tool-card" href="pipeline-step-through/index.html">
+    <canvas class="era-thumb card-media" data-era="modern" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 3</div>
+    <h3>Pipeline Step-Through</h3>
+    <p>A wireframe cube moves through the actual graphics pipeline, one stage at a time.</p>
+    <div class="concepts">model/world/camera space · projection · matrices</div>
+  </a>
+  <a class="tool-card" href="light-material-lab/index.html">
+    <canvas class="era-thumb card-media" data-era="modern" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 4</div>
+    <h3>Light &amp; Material Lab</h3>
+    <p>Isolate light type and material type on one shape to see what each actually controls.</p>
+    <div class="concepts">lighting · materials · shading</div>
+  </a>
+  <a class="tool-card" href="camera-perspective-lab/index.html">
+    <canvas class="era-thumb card-media" data-era="modern" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 4</div>
+    <h3>Camera &amp; Perspective Lab</h3>
+    <p>Move a camera around one scene and compare perspective, orthographic projection, and clipping planes.</p>
+    <div class="concepts">camera · perspective · fov · near/far</div>
+  </a>
+  <a class="tool-card" href="vertex-sculptor/index.html">
+    <canvas class="era-thumb card-media" data-era="nes" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 4</div>
+    <h3>Vertex Sculptor</h3>
+    <p>Click to place vertices in 3D space and watch the real beginShape/vertex/endShape code build itself.</p>
+    <div class="concepts">custom geometry · vertices · WebGL code</div>
+  </a>
+  <a class="tool-card" href="gameboy-sprite-editor/index.html">
+    <canvas class="era-thumb card-media" data-era="gameboy" width="320" height="86"></canvas>
+    <div class="unit-tag">Unit 5</div>
+    <h3>Game Boy Palette Sprite Editor</h3>
+    <p>A 4-color sprite editor bridging pixel-art constraint thinking into GB Studio.</p>
+    <div class="concepts">palette limits · sprites · pixel grids</div>
+  </a>
+</div>
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+<script src="../assets/era-graphics.js"></script>
+<script>
+  document.querySelectorAll('canvas.era-thumb').forEach(function (c) {
+    window.IGEraGraphics.render(c, c.dataset.era);
+  });
+</script>
+</body></html>

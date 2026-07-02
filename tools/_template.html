@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[Tool Name] — Interactive Graphics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/ig-theme.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="../index.html">Interactive Graphics</a>
+  <nav>
+    <a href="../units/index.html">Units</a>
+    <a href="../tools/index.html">Tools</a><a href="../assignments/index.html">Assignments</a>
+    <a href="../teach/index.html">Teach</a><a href="../journey/index.html">Journey</a><a href="../guest/index.html">Guest Voices</a>
+    <a href="../about/index.html">About</a>
+  </nav>
+</header>
+
+<section class="tool-header">
+  <div class="stage-tag">Unit N — [Unit Name]</div>
+  <h1>[Tool Name]</h1>
+  <p class="subtitle">[One or two sentences: what this teaches, in plain language.]</p>
+  <p class="writing-note">[One serious paragraph that names the mechanism this tool makes visible, grounds it in the unit's larger claim, and gives students a concrete way to begin reading the interaction.]</p>
+  <div class="concept-tags">[concept] · [concept] · [concept]</div>
+</section>
+
+<main class="workspace">
+  <section class="panel" id="canvas-panel">
+    <div id="canvas-container"></div>
+    <div class="readout-row" id="readouts">
+      <!-- live value readouts go here, populated by updateUI() -->
+    </div>
+  </section>
+
+  <aside class="panel" id="controls-panel">
+    <div class="control-group">
+      <label>Example Slider <span class="value-pill" id="exampleValueLabel">50</span></label>
+      <input type="range" id="exampleSlider" min="0" max="100" value="50" oninput="updateUI()">
+    </div>
+    <div class="btn-row">
+      <button class="primary-btn" onclick="resetTool()">Reset</button>
+      <button class="secondary-btn" onclick="randomizeTool()">Randomize</button>
+    </div>
+  </aside>
+</main>
+
+<section class="prompt-row">
+  <div class="prompt-card try">
+    <h3>Try this</h3>
+    <p>[A concrete first action for the student to take.]</p>
+  </div>
+  <div class="prompt-card notice">
+    <h3>Notice this</h3>
+    <p>[What should change, and why it matters conceptually.]</p>
+  </div>
+  <div class="prompt-card remix">
+    <h3>Remix this</h3>
+    <p>[An open-ended extension or variation to try next.]</p>
+  </div>
+</section>
+
+<div class="code-panel">
+  <button class="copy-btn" onclick="copyCode()">Copy code</button>
+  <pre id="codeOutput">// live code preview renders here, built by updateCodeView()</pre>
+</div>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+
+<script src="../assets/vendor/p5.min.js"></script>
+<script>
+  // ---- state ----
+  let state = { exampleValue: 50 };
+
+  // ---- p5 sketch, embedded in #canvas-container ----
+  function setup() {
+    const c = createCanvas(500, 400);
+    c.parent('canvas-container');
+  }
+
+  function draw() {
+    background(250, 246, 240);
+    // render using `state` here
+  }
+
+  // ---- UI sync: slider/control changes -> state -> canvas + readouts + code ----
+  function updateUI() {
+    state.exampleValue = parseInt(document.getElementById('exampleSlider').value);
+    document.getElementById('exampleValueLabel').textContent = state.exampleValue;
+    updateReadouts();
+    updateCodeView();
+  }
+
+  function updateReadouts() {
+    document.getElementById('readouts').innerHTML =
+      `<div class="readout-value">value = ${state.exampleValue}</div>`;
+  }
+
+  function updateCodeView() {
+    document.getElementById('codeOutput').innerHTML =
+      `<span class="cm">// updates live as you move the slider</span>\n` +
+      `<span class="kw">let</span> value = <span class="hi num">${state.exampleValue}</span>;`;
+  }
+
+  function resetTool() {
+    document.getElementById('exampleSlider').value = 50;
+    updateUI();
+  }
+
+  function randomizeTool() {
+    document.getElementById('exampleSlider').value = Math.floor(Math.random() * 100);
+    updateUI();
+  }
+
+  function copyCode() {
+    navigator.clipboard.writeText(document.getElementById('codeOutput').innerText);
+  }
+
+  // initialize readouts/code on load
+  window.addEventListener('load', () => { updateReadouts(); updateCodeView(); });
+</script>
+</body>
+</html>

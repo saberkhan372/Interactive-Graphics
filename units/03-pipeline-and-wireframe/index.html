@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 3: Pipeline and Wireframe — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/ig-theme.css">
+<style>
+  .unit-actions { display: flex; flex-wrap: wrap; gap: var(--space-5); margin: var(--space-7) 0; }
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    text-transform: uppercase;
+    background: var(--highlight-light);
+    padding: var(--space-1) var(--space-4);
+    border-radius: var(--radius-pill);
+    margin-left: var(--space-3);
+  }
+</style>
+</head><body>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Interactive Graphics</a>
+  <nav><a href="../index.html">Units</a><a href="../../tools/index.html">Tools</a><a href="../../assignments/index.html">Assignments</a><a href="../../teach/index.html">Teach</a><a href="../../journey/index.html">Journey</a><a href="../../guest/index.html">Guest Voices</a><a href="../../about/index.html">About</a></nav>
+</header>
+<main class="content-page">
+  <div class="stage-tag">Unit 3</div>
+  <h1>Pipeline and Wireframe <span class="badge">2023–24 addition</span></h1>
+  <p class="writing-note">This unit names the hidden machinery that WebGL usually hides. A cube is measured in model space, moved into world space, remeasured by the camera, projected, and finally placed on the screen. Each step is a change in the numbers before it is a change in the image.</p>
+  <p>This is the unit where the course stops using WebGL and starts explaining it. Students build a 3D wireframe renderer from close to scratch, walking through the actual graphics pipeline: model space, world space, camera space, projection, screen space. The goal is to treat those transformations as real math rather than work the library silently performs. It is a harder, more ambitious unit than the year before, and it now has a dedicated tool that makes each transformation visible.</p>
+  <p>Covers: 3D wireframes without WebGL, and the underlying 3D pipeline.</p>
+  <div class="unit-actions">
+    <a class="tool-cta" href="../../tools/pipeline-step-through/index.html">Open the tool: Pipeline Step-Through →</a>
+    <a class="tool-cta secondary" href="../../assignments/3d-wireframe.html">Open assignment: 3D Wireframe →</a>
+  </div>
+  <section class="lesson-grid" aria-label="Unit 3 lessons">
+    <a class="lesson-card" href="lessons/30-wireframes-without-webgl.html">
+      <div class="lesson-kicker">Lesson 3.0</div>
+      <h2>3D Wireframes Without WebGL</h2>
+      <p>Students expand a renderer with new shapes, scene composition, and camera controls while keeping the wireframe structure visible.</p>
+    </a>
+    <a class="lesson-card" href="lessons/31-graphics-pipeline.html">
+      <div class="lesson-kicker">Lesson 3.1</div>
+      <h2>The Graphics Pipeline</h2>
+      <p>Matrix multiplication, rotation, camera space, projection, and screen output become a sequence students can inspect step by step.</p>
+    </a>
+  </section>
+  <p class="source-list">Assignment: <a href="../../assignments/3d-wireframe.html">3D Wireframe</a></p>
+  <p class="source-list">Source material: 3D wireframes (without WebGL) · 3d pipeline.</p>
+</main>
+<nav class="lesson-nav" aria-label="Unit navigation" style="margin: 8px clamp(16px,5vw,64px) 40px; max-width: 820px;">
+  <a class="secondary" href="../02-2d-to-3d/index.html">← Unit 2 — 2D to 3D</a>
+  <a href="../04-3d-scenes-and-webgl/index.html">Next: Unit 4 — 3D Scenes and WebGL →</a>
+</nav>
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body></html>

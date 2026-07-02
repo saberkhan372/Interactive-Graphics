@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interactive Graphics — from Apple II to WebGL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/ig-theme.css">
+<style>
+  .hero {
+    padding: 60px clamp(16px,5vw,64px) 40px;
+    max-width: 900px;
+  }
+  .hero .stage-tag { margin-bottom: 18px; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 6vw, 56px);
+    line-height: 1.05;
+    margin: 0 0 18px;
+  }
+  .hero p.lede {
+    font-size: 18px;
+    max-width: 62ch;
+    color: rgba(44,42,38,0.78);
+  }
+  .origin {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px clamp(20px,4vw,36px);
+    margin: 8px clamp(16px,5vw,64px) 40px;
+    max-width: 820px;
+  }
+  .origin h2 { font-family: var(--font-display); font-size: 22px; margin-top: 0; }
+  .origin p { color: rgba(44,42,38,0.82); }
+  .unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 0 clamp(16px,5vw,64px) 48px;
+    max-width: 1100px;
+  }
+  .unit-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px 20px;
+    text-decoration: none;
+    color: var(--ink);
+    display: block;
+  }
+  .unit-card .num { font-family: var(--font-mono); color: var(--accent); font-size: 12px; }
+  .unit-card h3 { margin: 6px 0 8px; font-family: var(--font-display); font-size: 18px; }
+  .unit-card p { margin: 0; font-size: 14px; color: rgba(44,42,38,0.7); }
+  .teacher-band {
+    background: rgba(61, 90, 128, 0.08);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 32px clamp(16px,5vw,64px);
+  }
+  .teacher-band .inner { max-width: 820px; }
+  .teacher-band h2 { font-family: var(--font-display); font-size: 24px; margin: 0 0 8px; }
+  .teacher-band p { max-width: 62ch; color: var(--text-body); }
+  .teacher-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="index.html">Interactive Graphics</a>
+  <nav>
+    <a href="units/index.html">Units</a>
+    <a href="tools/index.html">Tools</a><a href="assignments/index.html">Assignments</a>
+    <a href="teach/index.html">Teach</a><a href="journey/index.html">Journey</a>
+    <a href="guest/index.html">Guest Voices</a>
+    <a href="about/index.html">About</a>
+  </nav>
+</header>
+
+<section class="history-strip" aria-label="Four eras of graphics hardware, each drawn with its own real technique">
+  <p class="strip-label">Same scene. Four eras of hardware — each rendered with that era's real technique.</p>
+  <div class="strip-row">
+    <div class="strip-col">
+      <canvas class="era-strip" data-era="appleii" width="320" height="150"></canvas>
+      <div class="strip-name">Apple II HGR · ~1977</div>
+      <div class="strip-tech">NTSC artifact color + scanlines</div>
+    </div>
+    <div class="strip-col">
+      <canvas class="era-strip" data-era="nes" width="320" height="150"></canvas>
+      <div class="strip-name">NES-ish · ~1985</div>
+      <div class="strip-tech">8×8 tile grid + dithered ground</div>
+    </div>
+    <div class="strip-col">
+      <canvas class="era-strip" data-era="web96" width="320" height="150"></canvas>
+      <div class="strip-name">Early Web · ~1996</div>
+      <div class="strip-tech">ordered GIF dither + bevel</div>
+    </div>
+    <div class="strip-col">
+      <canvas class="era-strip" data-era="modern" width="320" height="150"></canvas>
+      <div class="strip-name">Modern Canvas · today</div>
+      <div class="strip-tech">gradients + soft glow</div>
+    </div>
+  </div>
+</section>
+
+<section class="hero">
+  <div class="stage-tag">Dalton School · 2022–2024</div>
+  <h1>From Apple II to WebGL</h1>
+  <p class="lede">Interactive Graphics was a two-year Dalton elective, taught across roughly 19 weeks and 38 to 51 class meetings per year, that traced computer graphics from the Apple II to modern real-time 3D. The course was built around a simple claim: the limits of a machine shape the art, code, and culture made with it.</p>
+  <p class="writing-note">This site reconstructs that course as a public archive. It keeps the personal origin of the class, the historical sequence, and the hands-on tools together because the intellectual work is the same in each place: make the hidden system visible, name how it works, and then build something more intentional with that knowledge.</p>
+</section>
+
+<div class="origin">
+  <h2>Where this started</h2>
+  <p>"My first memories of computers are also about computer graphics and the impact it has on humans... I spent the first 8 years of my life in Bangladesh where I did not see a computer. I remember my father, an architect, rendering designs on AutoCAD on his Intel i386 PC... Around that time my aunt in the United States sent us a Nintendo Entertainment System... the 8-bit graphics and innovative game design got me hooked."</p>
+  <p style="text-align:right; font-family: var(--font-mono); font-size:13px;">— from the course welcome letter, September 2022</p>
+</div>
+
+<div class="unit-grid">
+  <a class="unit-card" href="units/00-history/index.html">
+    <canvas class="era-thumb card-media" data-era="appleii" width="320" height="92"></canvas>
+    <div class="num">Unit 0</div>
+    <h3>History and Constraint</h3>
+    <p>Apple II, NES, Bryce3D, and what each era's hardware would and wouldn't let you make.</p>
+  </a>
+  <a class="unit-card" href="units/01-basic-and-fractals/index.html">
+    <canvas class="era-thumb card-media" data-era="nes" width="320" height="92"></canvas>
+    <div class="num">Unit 1</div>
+    <h3>BASIC and Fractals</h3>
+    <p>Applesoft BASIC on an emulator, bouncing balls, and a recursive fractal tree.</p>
+  </a>
+  <a class="unit-card" href="units/02-2d-to-3d/index.html">
+    <canvas class="era-thumb card-media" data-era="web96" width="320" height="92"></canvas>
+    <div class="num">Unit 2</div>
+    <h3>2D to 3D</h3>
+    <p>The bridge from flat shapes to WebGL, adding a third dimension on purpose.</p>
+  </a>
+  <a class="unit-card" href="units/03-pipeline-and-wireframe/index.html">
+    <canvas class="era-thumb card-media" data-era="modern" width="320" height="92"></canvas>
+    <div class="num">Unit 3</div>
+    <h3>Pipeline and Wireframe</h3>
+    <p>The math under WebGL: building a 3D renderer without the library doing it for you.</p>
+  </a>
+  <a class="unit-card" href="units/04-3d-scenes-and-webgl/index.html">
+    <canvas class="era-thumb card-media" data-era="modern" width="320" height="92"></canvas>
+    <div class="num">Unit 4</div>
+    <h3>3D Scenes and WebGL</h3>
+    <p>Lighting, materials, camera, and custom shapes, built into a full scene piece by piece.</p>
+  </a>
+  <a class="unit-card" href="units/05-game-dev/index.html">
+    <canvas class="era-thumb card-media" data-era="gameboy" width="320" height="92"></canvas>
+    <div class="num">Unit 5</div>
+    <h3>Game Dev Bridge</h3>
+    <p>Pixel art skills meet GB Studio through sprites, palettes, and a first playable game.</p>
+  </a>
+</div>
+
+<section class="teacher-band">
+  <div class="inner">
+    <h2>For Teachers</h2>
+    <p>The course now includes a runnable teaching apparatus: pacing notes, setup decisions, warm-up questions, per-unit cautions, and a course-specific AI integrity page.</p>
+    <div class="teacher-links">
+      <a class="tool-cta" href="teach/index.html">Open Teacher's Guide &rarr;</a>
+      <a class="tool-cta secondary" href="teach/ai-integrity.html">AI and Integrity &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+
+<script src="assets/era-graphics.js"></script>
+<script>
+  // Paint every procedural era panel: the HistoryStrip masthead and each
+  // unit card's thumbnail. Each canvas names its era in data-era.
+  document.querySelectorAll('canvas.era-strip, canvas.era-thumb').forEach(function (c) {
+    window.IGEraGraphics.render(c, c.dataset.era);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2.0: Intro to WebGL in p5.js — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 2 · Lesson 2.0</div>
+  <h1>Intro to WebGL in p5.js</h1>
+  <p class="writing-note">The first WebGL lesson changes the renderer before it changes the student's thinking. A browser sketch still has HTML, CSS, and JavaScript, but the canvas now has depth, rotation, and a coordinate system that can no longer be read as only left-right and up-down.</p>
+  <p class="lesson-meta">Source deck: 2.0 - Intro to WebGL in p5.js.pptx · 9 slides</p>
+
+  <h2>What the class did</h2>
+  <p>Students reviewed the Unit 0 question of whether directions can be optimized, then returned to the structure of a browser sketch: <code>index.html</code>, <code>sketch.js</code>, p5.js, and the WebGL renderer. The lesson framed WebGL as the start of a longer 3D sequence: geometry, light and materials, texture, camera and perspective, offscreen graphics, models, custom shapes, and eventually a project.</p>
+  <p>The first coding move was small but decisive: the third argument to <code>createCanvas</code> changes the rendering context. From that point on, shape, position, and rotation have to be understood in a space with depth.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="kw">function</span> <span class="fn">setup</span>() {
+  <span class="fn">createCanvas</span>(<span class="num">400</span>, <span class="num">400</span>, <span class="hi">WEBGL</span>);
+}
+
+<span class="kw">function</span> <span class="fn">draw</span>() {
+  <span class="fn">background</span>(<span class="num">240</span>);
+  <span class="fn">rotateY</span>(frameCount * <span class="num">0.01</span>);
+  <span class="fn">box</span>(<span class="num">120</span>);
+}</pre></div>
+
+  <h2>Key idea</h2>
+  <p>Adding WebGL does not remove the old web structure. It changes what the drawing surface can represent. The file system stays familiar while the space inside the canvas becomes less familiar.</p>
+
+  <h2>Try it</h2>
+  <p>Open Flatten/Extrude and slide between the flat face and the extruded shape. Treat the z-axis as a new piece of information the drawing has to carry.</p>
+  <a class="tool-cta" href="../../../tools/flatten-extrude/index.html">Open Flatten/Extrude →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="../index.html">← Unit 2 index</a>
+    <a href="21-making-3d-shapes.html">Next: Making 3D Shapes →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

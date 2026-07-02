@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bridge Lesson: Tomo Wa 3D Rectangle — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 2 · Bridge lesson</div>
+  <h1>Tomo Wa 3D Rectangle</h1>
+  <p class="writing-note">This bridge lesson makes translation difficult in the right way. Students have to read an Applesoft BASIC program that already contains trigonometry, projected points, and edge drawing, then rename and rebuild it in JavaScript so the structure becomes legible.</p>
+  <p class="lesson-meta">Source doc: 3D Rectangle from Tomo Wa on Applesoft BASIC in JavaScript.docx</p>
+
+  <h2>What the class did</h2>
+  <p>The source document begins with a clear to-do list: add comments to show understanding, update variable names to show what they do, and recreate the code in p5.js. The original program uses sine and cosine to predict points on a circle, turns those values into projected screen coordinates, draws the edges with <code>HPLOT</code>, then increments the angles and repeats.</p>
+  <p>This is the same translation habit from Unit 1, but now the translation has more conceptual pressure. Students are no longer only translating syntax. They are also explaining how a rotating wireframe can be built from projected points and connected edges.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="num">60</span> E = <span class="fn">COS</span>(A)
+<span class="num">70</span> F = <span class="fn">SIN</span>(A)
+<span class="num">141</span> X1 = E / (F + <span class="num">2</span>) * RADIUS + <span class="num">100</span>
+<span class="num">144</span> Y2 = <span class="num">1</span> / (F + <span class="num">2</span>) * RADIUS + <span class="num">100</span>
+<span class="num">190</span> <span class="fn">HPLOT</span> X1,Y2 <span class="kw">TO</span> X2,Y4
+<span class="num">270</span> A = M + A
+<span class="num">350</span> <span class="kw">GOTO</span> <span class="num">60</span></pre></div>
+
+  <h2>Key idea</h2>
+  <p>A wireframe is a model made visible through projection. The program does not store a finished rectangle image. It computes points, draws edges between them, changes the angles, and computes again.</p>
+
+  <h2>Try it</h2>
+  <p>Use the Pipeline Step-Through tool as a preview of the next unit. The Tomo Wa rectangle already contains the central problem: 3D numbers have to become screen positions before they can be drawn.</p>
+  <a class="tool-cta" href="../../../tools/pipeline-step-through/index.html">Open Pipeline Step-Through →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="22-making-new-3d-shapes.html">← Previous: Making New 3D Shapes</a>
+    <a href="../../03-pipeline-and-wireframe/index.html">Next: Unit 3 — Pipeline and Wireframe →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

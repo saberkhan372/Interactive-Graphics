@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI and Integrity — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/ig-theme.css">
+<style>
+  .content-page { max-width: 900px; }
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-7);
+    margin: var(--space-8) 0 var(--space-10);
+  }
+  .principle-card {
+    background: var(--surface-card);
+    border: var(--hairline);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: var(--space-7);
+  }
+  .principle-card h3 {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-display);
+    font-size: var(--text-subheading);
+  }
+  .principle-card p { margin: 0; font-size: var(--text-sm); }
+  .policy-box {
+    background: var(--surface-card);
+    border: var(--hairline);
+    border-left: 3px solid var(--highlight);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+    padding: var(--space-7);
+    margin: var(--space-7) 0;
+  }
+  .policy-box h2 { margin-top: 0; }
+  .example-note {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    color: var(--text-faint);
+    background: var(--surface-sunken);
+    border-radius: var(--radius-xs);
+    padding: var(--space-5);
+    overflow-x: auto;
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../index.html">Interactive Graphics</a>
+  <nav><a href="../units/index.html">Units</a><a href="../tools/index.html">Tools</a><a href="../assignments/index.html">Assignments</a><a href="index.html">Teach</a><a href="../journey/index.html">Journey</a><a href="../guest/index.html">Guest Voices</a><a href="../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Course policy</div>
+  <h1>How We Use AI in This Course</h1>
+  <p class="writing-note">The central question of Interactive Graphics is not just how to make an image. It is what you understand about the system that made the image possible. Generative AI makes that question sharper: what do you keep when the machine can write code for you?</p>
+
+  <p>In this course, the default rule is simple: do not use generative AI for any part of an assignment unless the teacher explicitly allows it. That includes brainstorming, research summaries, writing, debugging, code generation, and revision. When AI use is allowed, it has to be visible, limited, and explained.</p>
+
+  <div class="principle-grid">
+    <div class="principle-card">
+      <h3>Your idea stays yours</h3>
+      <p>You choose the topic, visual argument, constraints, references, and final decisions. A tool can suggest; it cannot replace your authorship.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Your code stays legible to you</h3>
+      <p>If you cannot explain what a line does, you should not submit it as your work. Understanding matters more than speed.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Your help stays documented</h3>
+      <p>Outside assistance belongs in the open: tutorials, classmates, teachers, documentation, and approved AI tools all need credit.</p>
+    </div>
+  </div>
+
+  <section class="policy-box">
+    <h2>Allowed Only When Assigned</h2>
+    <p>Sometimes the teacher may ask you to use an AI system as an object of study. You might compare an AI explanation to your own notes, ask it for a second version of a small function, or critique a generated description of BASIC and p5.js. In those cases, the AI output is not the final answer. It is material you are responsible for reading, testing, revising, and questioning.</p>
+  </section>
+
+  <h2>What Must Be Documented</h2>
+  <ul class="check-list">
+    <li>The tool you used and what you asked it to do.</li>
+    <li>Which part of the output you used, rejected, or changed.</li>
+    <li>How you tested that the code or explanation was correct.</li>
+    <li>What you now understand that you did not understand before.</li>
+  </ul>
+
+  <h2>What Is Not Acceptable</h2>
+  <ul class="check-list">
+    <li>Submitting AI-generated code, text, images, or research as if you made it yourself.</li>
+    <li>Using AI to bypass the hard part of an assignment: choosing, sketching, coding, debugging, or explaining.</li>
+    <li>Replacing your notebook process with generated summaries or plans.</li>
+    <li>Asking AI for a finished project and then changing surface details.</li>
+  </ul>
+
+  <h2>A Note from the Archive</h2>
+  <p>The 2023-2024 lesson planner includes a January 2024 moment where a generated comparison between Applesoft BASIC and p5.js was used in lesson prep. That is useful to keep in the public history of the course because it shows the exact problem students now need to learn how to handle: AI can produce a plausible paragraph, but a plausible paragraph is not the same thing as understanding the two systems.</p>
+  <p>So the classroom move is not "AI is magic" or "AI is forbidden because it exists." The move is stricter and more interesting: read the output as a claim, test it against code, revise it in your own language, and name the work you did.</p>
+
+  <h2>Submission Note Template</h2>
+  <p>When AI use is explicitly allowed, add a short note like this to your project document or code comments:</p>
+  <div class="example-note">AI use note: I used [tool] to [limited task]. I used [specific part] after checking it against [test, documentation, or code]. I changed [specific change]. The final design, code decisions, and explanation are mine.</div>
+
+  <h2>Teacher Check</h2>
+  <ul class="check-list">
+    <li>Before assigning: say whether AI is allowed, not allowed, or required as an object of critique.</li>
+    <li>During work time: ask students to explain the code path, not just show that it runs.</li>
+    <li>During critique: ask what changed because of constraint, not only what looks polished.</li>
+    <li>After submission: read the process note alongside the artifact.</li>
+  </ul>
+
+  <nav class="lesson-nav">
+    <a class="secondary" href="index.html">&larr; Teacher's Guide</a>
+    <a href="../assignments/index.html">Assignments &rarr;</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

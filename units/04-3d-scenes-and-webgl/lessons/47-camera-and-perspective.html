@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 4.7: Camera and Perspective — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 4 · Lesson 4.7</div>
+  <h1>Camera and Perspective</h1>
+  <p class="writing-note">The camera is not a passive window. It is a system of choices about where the viewer is, what the viewer looks at, and how depth is converted into a flat image.</p>
+  <p class="lesson-meta">Source deck: IG 3.7 - Camera &amp; Perspective.pptx · 5 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked how textures are applied and what kinds of things can be used as texture sources. The lesson then moved into camera and perspective commands: <code>perspective</code>, <code>ortho</code>, <code>frustum</code>, <code>pan</code>, <code>tilt</code>, <code>lookAt</code>, and <code>camera</code> with eye position, center position, and up vector.</p>
+  <p>This is the point where the viewer becomes part of the scene. Changing the camera can alter the meaning of the same objects without moving the objects themselves.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="fn">perspective</span>(PI / <span class="num">3</span>, width / height, <span class="num">0.1</span>, <span class="num">5000</span>);
+<span class="fn">camera</span>(
+  <span class="num">0</span>, -<span class="num">160</span>, <span class="num">500</span>,
+  <span class="num">0</span>, <span class="num">0</span>, <span class="num">0</span>,
+  <span class="num">0</span>, <span class="num">1</span>, <span class="num">0</span>
+);</pre></div>
+
+  <h2>Key idea</h2>
+  <p>The same scene can be rendered differently because the camera changes the relationship between world space and the image plane.</p>
+
+  <h2>Try it</h2>
+  <p>Use Camera &amp; Perspective Lab to change the projection mode, field of view, and clipping planes without changing the objects in the scene.</p>
+  <a class="tool-cta" href="../../../tools/camera-perspective-lab/index.html">Open Camera &amp; Perspective Lab →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="46-textures.html">← Previous: Textures</a>
+    <a href="48-dimensions-and-perspectives.html">Next: Dimensions and Perspectives →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Scene with WebGL — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/ig-theme.css">
+<style>
+  .content { padding: 32px clamp(16px,5vw,64px) 48px; max-width: 760px; }
+  .content h1 { font-family: var(--font-display); font-size: clamp(28px,4vw,38px); margin: 6px 0 10px; }
+  .content h2 { font-family: var(--font-display); font-size: var(--text-heading); margin: 28px 0 8px; }
+  .content p { color: var(--text-body); }
+  .tool-cta { display: inline-block; margin: 18px 12px 0 0; background: var(--highlight); color: white; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-family: var(--font-mono); font-size: 14px; }
+  .res-list { font-size: var(--text-sm); }
+  .res-list li { margin-bottom: 6px; }
+</style>
+</head><body>
+<header class="site-header">
+  <a class="brand" href="../index.html">Interactive Graphics</a>
+  <nav><a href="../units/index.html">Units</a><a href="../tools/index.html">Tools</a><a href="index.html">Assignments</a><a href="../teach/index.html">Teach</a><a href="../journey/index.html">Journey</a><a href="../guest/index.html">Guest Voices</a><a href="../about/index.html">About</a></nav>
+</header>
+<div class="content">
+  <div class="stage-tag">Assignment · Unit 4 · Major Project</div>
+  <h1>3D Scene with WebGL</h1>
+  <p>Create an interactive 3D scene using WebGL in p5.js. This is the course's big integrative build: everything Unit 4 isolated one at a time — primitives, custom geometry, textures, lights, materials, camera — composed into one scene of your own design, with motion and interactivity.</p>
+  <p class="mini-note">As assigned 2022–23 · due Monday, February 13 · submit a GIF or movie plus a link to the project.</p>
+
+  <h2>Requirements</h2>
+  <ul class="check-list">
+    <li>Use translate() and rotate() to place objects;</li>
+    <li>Import a 3D object into the scene from a file;</li>
+    <li>Adjust camera and view — for example with camera(), perspective(), and/or ortho();</li>
+    <li>Use multiple 3D primitive shapes — box(), plane(), sphere(), ellipsoid(), cone(), cylinder(), torus();</li>
+    <li>Create custom 3D shape(s) using beginShape(), vertex(), and endShape();</li>
+    <li>Use an image to add texture to multiple 3D shapes with texture();</li>
+    <li>Adjust light and material to fit the scene — directional, ambient, or point light; normal, ambient, or specular material;</li>
+    <li>One or more objects in motion;</li>
+    <li>Add interactivity so the user can move the camera and/or objects;</li>
+    <li>Add the sketch to a new page on your portfolio website.</li>
+  </ul>
+
+  <h2>Bonus</h2>
+  <ul class="check-list bonus">
+    <li>Add interactivity between objects — collisions, texture, or shape change;</li>
+    <li>Integrate lightFalloff(), emissiveMaterial(), specularColor(), spotLight(), noLights(), frustum();</li>
+    <li>Integrate p5.EasyCam, a p5.js library for easy 3D camera control.</li>
+  </ul>
+
+  <h2>How it ran</h2>
+  <ul class="check-list">
+    <li>Paper design / research — a straightforward paper design of your scene in your notebook;</li>
+    <li>Rough draft — a simple version in p5.js with all the necessary parts;</li>
+    <li>Final draft — finalize and submit the GIF and link.</li>
+  </ul>
+
+  <h2>Resources</h2>
+  <ul class="res-list">
+    <li><a href="https://medium.com/processing-foundation/advancing-p5-jss-webgl-mode-8b987ddfd4bf">Advancing p5.js's WebGL mode — Sanket Singh, Processing Foundation</a></li>
+    <li><a href="https://www.aidanjnelson.com/projects/gsoc-2018/">p5.js WebGL improvements — Aidan Nelson</a></li>
+    <li><a href="https://freshfork.github.io/p5.EasyCam/">p5.EasyCam — James Dunn</a></li>
+    <li><a href="https://www.davepagurek.com/blog/depth-of-field/">Depth of field in p5.js — Dave Pagurek</a></li>
+  </ul>
+
+  <a class="tool-cta" href="../tools/vertex-sculptor/index.html">Practice custom shapes: Vertex Sculptor →</a>
+  <a class="tool-cta" style="background:var(--accent);" href="../tools/light-material-lab/index.html">Isolate the lighting: Light &amp; Material Lab →</a>
+</div>
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body></html>

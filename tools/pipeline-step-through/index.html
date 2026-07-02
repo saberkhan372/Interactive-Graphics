@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline Step-Through — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/ig-theme.css">
+<style>
+  .stage-stepper { display:flex; gap:6px; padding: 0 clamp(16px,4vw,48px) 14px; flex-wrap: wrap; }
+  .stage-btn {
+    font-family: var(--font-mono); font-size: 12px; padding: 8px 12px; border-radius: 8px;
+    border: 1px solid var(--border); background: white; cursor: pointer; text-align: left;
+  }
+  .stage-btn .n { color: rgba(44,42,38,0.4); margin-right: 4px; }
+  .stage-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .stage-btn.active .n { color: rgba(255,255,255,0.6); }
+  .explain-box {
+    background: rgba(61,90,128,0.06); border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 14px;
+  }
+  table.vtable { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; margin-top: 10px; }
+  table.vtable th, table.vtable td { padding: 4px 8px; text-align: right; border-bottom: 1px solid var(--border); }
+  table.vtable th:first-child, table.vtable td:first-child { text-align: left; }
+  .note { font-size: 12px; color: rgba(44,42,38,0.55); margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="../../index.html">Interactive Graphics</a>
+  <nav>
+    <a href="../../units/index.html">Units</a>
+    <a href="../../tools/index.html">Tools</a><a href="../../assignments/index.html">Assignments</a>
+    <a href="../../teach/index.html">Teach</a><a href="../../journey/index.html">Journey</a><a href="../../guest/index.html">Guest Voices</a>
+    <a href="../../about/index.html">About</a>
+  </nav>
+</header>
+
+<section class="tool-header">
+  <div class="stage-tag">Unit 3 — Pipeline and Wireframe</div>
+  <h1>Pipeline Step-Through</h1>
+  <p class="subtitle">A wireframe cube moves through the real graphics pipeline, one stage at a time — the same math every WebGL library does for you automatically, made visible.</p>
+  <p class="writing-note">The tool slows the pipeline down enough to make each coordinate system legible. The table shows what changes numerically; the cube shows what those changes mean visually.</p>
+  <div class="concept-tags">model space · world space · camera space · projection · screen space</div>
+  <div class="tool-context"><span><span class="ctx-label">unit</span><a href="../../units/03-pipeline-and-wireframe/index.html">Unit 3 — Pipeline and Wireframe</a></span><span><span class="ctx-label">lesson</span><a href="../../units/03-pipeline-and-wireframe/lessons/30-wireframes-without-webgl.html">3.0 Wireframes without WebGL</a> · <a href="../../units/03-pipeline-and-wireframe/lessons/31-graphics-pipeline.html">3.1 The Graphics Pipeline</a></span><span><span class="ctx-label">assignment</span><a href="../../assignments/3d-wireframe.html">3D Wireframe</a></span><span><span class="ctx-label">in class</span>30-minute guided walkthrough, one stage at a time</span></div>
+</section>
+
+<div class="stage-stepper" id="stageStepper"></div>
+
+<main class="workspace">
+  <section class="panel" id="canvas-panel">
+    <div id="canvas-container"></div>
+    <div id="explainBox" class="explain-box"></div>
+    <table class="vtable">
+      <thead><tr><th>vertex</th><th>x</th><th>y</th><th>z</th></tr></thead>
+      <tbody id="vtableBody"></tbody>
+    </table>
+    <p class="note">Stages 0–3 are drawn with a fixed display angle so you can watch the cube change smoothly. Stage 4 (Screen Space) switches to the <em>real</em> perspective projection. That is the actual pipeline output, and it looks different on purpose.</p>
+  </section>
+
+  <aside class="panel" id="controls-panel">
+    <div class="control-group">
+      <label>World rotation (Y axis) <span class="value-pill" id="rotLabel">30°</span></label>
+      <input type="range" id="rotSlider" min="0" max="360" value="30" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>World translate (X) <span class="value-pill" id="txLabel">0</span></label>
+      <input type="range" id="txSlider" min="-150" max="150" value="0" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Camera distance (Z) <span class="value-pill" id="camLabel">400</span></label>
+      <input type="range" id="camSlider" min="200" max="800" value="400" oninput="updateUI()">
+    </div>
+    <div class="control-group">
+      <label>Field of view <span class="value-pill" id="fovLabel">60°</span></label>
+      <input type="range" id="fovSlider" min="20" max="120" value="60" oninput="updateUI()">
+    </div>
+    <div class="btn-row">
+      <button class="primary-btn" onclick="resetTool()">Reset</button>
+      <button class="secondary-btn" onclick="randomizeTool()">Randomize</button>
+    </div>
+  </aside>
+</main>
+
+<section class="prompt-row">
+  <div class="prompt-card try">
+    <h3>Try this</h3>
+    <p>Step through all five stages with the sliders left alone. Watch which numbers in the table change at each stage, and which stay the same.</p>
+  </div>
+  <div class="prompt-card notice">
+    <h3>Notice this</h3>
+    <p>Notice that rotation only changes the numbers at World Space and after. Model Space is always the same cube, no matter what the sliders do.</p>
+  </div>
+  <div class="prompt-card remix">
+    <h3>Remix this</h3>
+    <p>Push the field of view slider to its extreme in both directions at Screen Space. What does a very wide FOV do to the edges of the cube, and how does that compare to a wide-angle camera lens?</p>
+  </div>
+</section>
+
+<div class="code-panel">
+  <button class="copy-btn" onclick="copyCode()">Copy code</button>
+  <pre id="codeOutput"></pre>
+</div>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+
+<script src="../../assets/vendor/p5.min.js"></script>
+<script>
+/* ---------- pipeline math ---------- */
+const CUBE = [
+  [-50,-50,-50],[50,-50,-50],[50,50,-50],[-50,50,-50],
+  [-50,-50, 50],[50,-50, 50],[50,50, 50],[-50,50, 50]
+];
+const EDGES = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+
+const STAGES = [
+  { key:'model',    label:'0 · Model Space',    explain:'The cube\'s own local coordinates — always the same, centered on its own origin, before anything else happens to it.' },
+  { key:'world',     label:'1 · World Space',    explain:'The model transform is applied: rotate, then move (translate) into the shared scene. Every object in a scene ends up in this same shared coordinate space.' },
+  { key:'camera',    label:'2 · Camera Space',   explain:'The scene is re-measured relative to the camera, as if the camera sits at the origin looking down the scene. Nothing about the cube changes — only what we\'re measuring it against.' },
+  { key:'clip',      label:'3 · Projection / Clip Space', explain:'A perspective divide is applied: farther points get pulled toward the center. This is the math that makes distant things look smaller.' },
+  { key:'screen',    label:'4 · Screen Space',   explain:'The final 2D coordinates are mapped onto actual pixels. This is the real output of the pipeline — what your GPU actually draws.' },
+];
+
+let state = { stage: 0, rot: 30, tx: 0, camZ: 400, fov: 60 };
+
+function rotateAroundY(p, deg) {
+  const a = deg * Math.PI / 180;
+  const [x,y,z] = p;
+  return [x*Math.cos(a) + z*Math.sin(a), y, -x*Math.sin(a) + z*Math.cos(a)];
+}
+function translatePoint(p, tx, ty, tz) { return [p[0]+tx, p[1]+ty, p[2]+tz]; }
+function toCameraSpace(p, camZ) { return [p[0], p[1], p[2] + camZ]; }
+function perspectiveDivide(p, fovDeg) {
+  const f = 1 / Math.tan((fovDeg * Math.PI/180) / 2);
+  const z = Math.max(p[2], 1);
+  return [ (p[0]*f)/z, (p[1]*f)/z, z ];
+}
+function toScreen(clipP, w, h) {
+  return [ clipP[0]*w*0.5 + w/2, -clipP[1]*h*0.5 + h/2 ];
+}
+
+// pipeline: returns the 3D (or clip-space) coordinates of every vertex, for a given stage
+function computeVerticesAtStage(stageIdx) {
+  return CUBE.map(v => {
+    let p = v;
+    if (stageIdx >= 1) p = translatePoint(rotateAroundY(p, state.rot), state.tx, 0, 0);
+    if (stageIdx >= 2) p = toCameraSpace(p, state.camZ);
+    if (stageIdx >= 3) p = perspectiveDivide(p, state.fov);
+    return p;
+  });
+}
+
+// fixed "display" isometric-ish projection used ONLY for stages 0-3, for visual continuity
+function displayProject(p) {
+  return [ p[0] - p[2]*0.4, p[1] + p[2]*0.25 ];
+}
+
+let cvW = 460, cvH = 340;
+
+function setup() {
+  const c = createCanvas(cvW, cvH);
+  c.parent('canvas-container');
+}
+
+function draw() {
+  background(255);
+  stroke(61,90,128);
+  strokeWeight(1.6);
+  const verts = computeVerticesAtStage(state.stage);
+  let pts2d;
+  if (state.stage < 4) {
+    pts2d = verts.map(p => {
+      const [dx,dy] = displayProject(p);
+      return [cvW/2 + dx, cvH/2 + dy];
+    });
+  } else {
+    pts2d = verts.map(p => toScreen(p, cvW, cvH));
+  }
+  for (const [a,b] of EDGES) {
+    line(pts2d[a][0], pts2d[a][1], pts2d[b][0], pts2d[b][1]);
+  }
+  noStroke();
+  fill(224,122,95);
+  for (const p of pts2d) circle(p[0], p[1], 5);
+}
+
+function updateUI() {
+  state.rot = parseInt(document.getElementById('rotSlider').value);
+  state.tx = parseInt(document.getElementById('txSlider').value);
+  state.camZ = parseInt(document.getElementById('camSlider').value);
+  state.fov = parseInt(document.getElementById('fovSlider').value);
+  document.getElementById('rotLabel').textContent = state.rot + '°';
+  document.getElementById('txLabel').textContent = state.tx;
+  document.getElementById('camLabel').textContent = state.camZ;
+  document.getElementById('fovLabel').textContent = state.fov + '°';
+  renderStepper();
+  renderExplain();
+  renderTable();
+  updateCodeView();
+}
+
+function renderStepper() {
+  const el = document.getElementById('stageStepper');
+  el.innerHTML = STAGES.map((s, i) =>
+    `<button class="stage-btn ${i===state.stage?'active':''}" onclick="goStage(${i})"><span class="n">${i}</span>${s.label.split('· ')[1]}</button>`
+  ).join('');
+}
+
+function goStage(i) { state.stage = i; renderStepper(); renderExplain(); renderTable(); updateCodeView(); }
+
+function renderExplain() {
+  document.getElementById('explainBox').textContent = STAGES[state.stage].explain;
+}
+
+function renderTable() {
+  const verts = computeVerticesAtStage(state.stage);
+  const rows = verts.map((v,i) =>
+    `<tr><td>v${i}</td><td>${v[0].toFixed(1)}</td><td>${v[1].toFixed(1)}</td><td>${v[2].toFixed(1)}</td></tr>`
+  ).join('');
+  document.getElementById('vtableBody').innerHTML = rows;
+}
+
+function updateCodeView() {
+  const lines = [];
+  lines.push(`<span class="cm">// Stage: ${STAGES[state.stage].label}</span>`);
+  lines.push(`<span class="kw">let</span> p = modelVertex; <span class="cm">// [x, y, z] in the cube's own space</span>`);
+  if (state.stage >= 1) {
+    lines.push(`p = <span class="fn">rotateY</span>(p, <span class="hi num">${state.rot}</span>); <span class="cm">// world transform: rotate</span>`);
+    lines.push(`p = <span class="fn">translate</span>(p, <span class="hi num">${state.tx}</span>, 0, 0); <span class="cm">// world transform: move</span>`);
+  }
+  if (state.stage >= 2) {
+    lines.push(`p = <span class="fn">toCameraSpace</span>(p, cameraZ: <span class="hi num">${state.camZ}</span>);`);
+  }
+  if (state.stage >= 3) {
+    lines.push(`p = <span class="fn">perspectiveDivide</span>(p, fov: <span class="hi num">${state.fov}</span>°); <span class="cm">// distance now shrinks x,y</span>`);
+  }
+  if (state.stage >= 4) {
+    lines.push(`screenXY = <span class="fn">toScreen</span>(p, canvasWidth, canvasHeight);`);
+  }
+  document.getElementById('codeOutput').innerHTML = lines.join('\n');
+}
+
+function resetTool() {
+  document.getElementById('rotSlider').value = 30;
+  document.getElementById('txSlider').value = 0;
+  document.getElementById('camSlider').value = 400;
+  document.getElementById('fovSlider').value = 60;
+  state.stage = 0;
+  updateUI();
+}
+
+function randomizeTool() {
+  document.getElementById('rotSlider').value = Math.floor(Math.random()*360);
+  document.getElementById('txSlider').value = Math.floor(Math.random()*300)-150;
+  document.getElementById('camSlider').value = 200 + Math.floor(Math.random()*600);
+  document.getElementById('fovSlider').value = 20 + Math.floor(Math.random()*100);
+  updateUI();
+}
+
+function copyCode() {
+  navigator.clipboard.writeText(document.getElementById('codeOutput').innerText);
+}
+
+window.addEventListener('load', updateUI);
+</script>
+</body>
+</html>

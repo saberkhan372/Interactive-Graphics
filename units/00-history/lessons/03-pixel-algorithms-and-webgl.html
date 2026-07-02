@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 0.3: Pixel Algorithms and WebGL — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/ig-theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Interactive Graphics</a>
+  <nav><a href="../../index.html">Units</a><a href="../../../tools/index.html">Tools</a><a href="../../../assignments/index.html">Assignments</a><a href="../../../teach/index.html">Teach</a><a href="../../../journey/index.html">Journey</a><a href="../../../guest/index.html">Guest Voices</a><a href="../../../about/index.html">About</a></nav>
+</header>
+
+<main class="content-page">
+  <div class="stage-tag">Unit 0 · Lesson 0.3</div>
+  <h1>Pixel Algorithms and WebGL</h1>
+  <p class="writing-note">The graph-paper image becomes an algorithmic problem in this lesson. Students have to decide what information a pixel needs, how a location should be named, and which instructions another person can actually follow.</p>
+  <p class="lesson-meta">Source deck: 0.3 - Pixel Algorithms and WebGL.pptx · 7 slides</p>
+
+  <h2>What the class did</h2>
+  <p>The warm-up asked students to explain what happens when the number of fish in a graphics example increases and why different computers perform differently. The class then returned to the pixel design: after drawing on graph paper, students wrote instructions for transmitting the design to someone else.</p>
+  <p>The coding turn introduced p5.js, the p5.js Web Editor, WebGL, and the Processing Foundation. The important bridge was not the syntax by itself. It was the move from human-readable directions on graph paper to executable directions in a browser.</p>
+
+  <h2>Code shown</h2>
+  <div class="code-panel lesson-code"><pre><span class="kw">function</span> <span class="fn">setup</span>() {
+  <span class="fn">createCanvas</span>(<span class="num">400</span>, <span class="num">400</span>, <span class="hi">WEBGL</span>);
+}
+
+<span class="kw">function</span> <span class="fn">draw</span>() {
+  <span class="fn">background</span>(<span class="num">245</span>);
+  <span class="fn">box</span>(<span class="num">120</span>);
+}</pre></div>
+
+  <h2>Key idea</h2>
+  <p>An algorithm has to be precise enough to survive translation. A person following directions and a browser running JavaScript are different executors, but both expose the same problem: unclear instructions produce unclear images.</p>
+
+  <h2>Try it</h2>
+  <p>In the Pixel Algorithm Playground, choose the stripes preset and change the divisor. You are editing the instruction that chooses a color for each coordinate, not painting individual cells by hand.</p>
+  <a class="tool-cta" href="../../../tools/pixel-algorithm-playground/index.html">Open Pixel Algorithm Playground →</a>
+
+  <nav class="lesson-nav" aria-label="Lesson navigation">
+    <a class="secondary" href="02-history-of-graphics.html">← Previous: History of Computers to Pixels</a>
+    <a href="04-personal-pixel-algorithms.html">Next: Personal Pixel Algorithms →</a>
+  </nav>
+</main>
+
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body>
+</html>

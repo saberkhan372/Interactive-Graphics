@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Wireframe — Interactive Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/ig-theme.css">
+<style>
+  .content { padding: 32px clamp(16px,5vw,64px) 48px; max-width: 760px; }
+  .content h1 { font-family: var(--font-display); font-size: clamp(28px,4vw,38px); margin: 6px 0 10px; }
+  .content h2 { font-family: var(--font-display); font-size: var(--text-heading); margin: 28px 0 8px; }
+  .content p { color: var(--text-body); }
+  .tool-cta { display: inline-block; margin: 18px 0 0; background: var(--highlight); color: white; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-family: var(--font-mono); font-size: 14px; }
+  .res-list { font-size: var(--text-sm); }
+  .res-list li { margin-bottom: 6px; }
+</style>
+</head><body>
+<header class="site-header">
+  <a class="brand" href="../index.html">Interactive Graphics</a>
+  <nav><a href="../units/index.html">Units</a><a href="../tools/index.html">Tools</a><a href="index.html">Assignments</a><a href="../teach/index.html">Teach</a><a href="../journey/index.html">Journey</a><a href="../guest/index.html">Guest Voices</a><a href="../about/index.html">About</a></nav>
+</header>
+<div class="content">
+  <div class="stage-tag">Assignment · Unit 3</div>
+  <h1>3D Wireframe</h1>
+  <p>Build a complex model out of basic three-dimensional parts, and rotate it — smoothly, logically, all parts moving together. This is the assignment where the pipeline math stops being abstract: your shape, your vertices, your rotation.</p>
+  <p class="mini-note">As assigned 2022–23 · due Monday, December 5 · submit a GIF recording of the canvas plus a link.</p>
+
+  <h2>Requirements</h2>
+  <ul class="check-list">
+    <li>500 × 500 canvas;</li>
+    <li>Use simple 3D shapes to construct a larger, complex model;</li>
+    <li>Use mouse or keyboard input to control the rotation of the model;</li>
+    <li>Rotations are smooth and logical;</li>
+    <li>All parts of the shape rotate together and appropriately;</li>
+    <li>Use saveGif() to record a GIF of the canvas showing rotation;</li>
+    <li>The model is centered on the canvas;</li>
+    <li>The code is well commented, including links to resources;</li>
+    <li>The code is well organized, with proper indentation and spacing;</li>
+    <li>Submit GIF and link.</li>
+  </ul>
+
+  <h2>Bonus</h2>
+  <ul class="check-list bonus">
+    <li>Use a non-cube, non-tetrahedron simple 3D shape;</li>
+    <li>Add colors to the surface of the wireframe;</li>
+    <li>Add an interesting distortion to the rotations.</li>
+  </ul>
+
+  <h2>How it ran</h2>
+  <ul class="check-list">
+    <li>Paper design — a straightforward design of your 3D shape in your notebook;</li>
+    <li>Rough draft — a simple version in p5.js with all the necessary parts;</li>
+    <li>Final draft — finalize and submit the GIF and link.</li>
+  </ul>
+
+  <h2>Resources</h2>
+  <ul class="res-list">
+    <li><a href="https://youtu.be/p4Iz0XJY-Qk">Coding Train — 3D Rendering with Rotation and Projection</a></li>
+    <li><a href="https://www.khanacademy.org/computing/computer-programming/programming-games-visualizations/programming-3d-shapes/a/what-are-3d-shapes">Khan Academy — 3D Shapes</a></li>
+    <li><a href="https://petercollingridge.co.uk/tutorials/3d/pygame/rotation/">Peter Collingridge — Rotation in 3D</a></li>
+  </ul>
+
+  <a class="tool-cta" href="../tools/pipeline-step-through/index.html">See the math first: Pipeline Step-Through →</a>
+</div>
+<footer class="site-footer">· Interactive Graphics — Dalton School 2022–2024 ·</footer>
+</body></html>
